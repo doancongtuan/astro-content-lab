@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+export async function getStaticPaths() {
+  const compares = await getCollection('compares')
+  return compares.map((compare) => ({
+    params: { slug: compare.id },
+    props: { compare },
+  }))
+}
+
+const { compare } = Astro.props
+const { Content } = await render(compare)
+---
+
+<BaseLayout title={compare.data.title}>
+  <h1>{compare.data.title}</h1>
+  <p>{compare.data.description}</p>
+  <p>🏆 Winner: {compare.data.winner}</p>
+  <h2>Verdict</h2>
+  <p>{compare.data.verdict}</p>
+  <Content />
+</BaseLayout>
