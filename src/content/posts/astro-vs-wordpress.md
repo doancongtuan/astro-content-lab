@@ -2,7 +2,6 @@
 title: Astro vs WordPress
 description: Why I switched from WordPress to Astro
 publishedAt: 2026-06-17
-layout: ../../layouts/BaseLayout.astro
 ---
 
 # Astro vs WordPress

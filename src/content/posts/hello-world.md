@@ -2,7 +2,6 @@
 title: Hello World
 description: My first blog post in Astro
 publishedAt: 2026-06-17
-layout: ../../layouts/BaseLayout.astro
 ---
 
 # Hello World

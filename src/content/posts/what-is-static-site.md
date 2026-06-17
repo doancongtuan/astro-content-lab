@@ -2,7 +2,6 @@
 title: What is a Static Site?
 description: Understanding static sites and why they are fast
 publishedAt: 2026-06-17
-layout: ../../layouts/BaseLayout.astro
 ---
 
 # What is a Static Site?
