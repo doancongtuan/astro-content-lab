@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const reviews = await getCollection('reviews')
+---
+
+<BaseLayout title="Reviews — Astro Content Lab">
+  <h1>Reviews</h1>
+  <ul>
+    {reviews.map((review) => (
+      <li>
+        <a href={`/reviews/${review.id}`}>{review.data.title}</a>
+        <p>{review.data.description}</p>
+        <p>Rating: {review.data.rating}/5</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

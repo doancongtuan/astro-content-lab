@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const guides = await getCollection('guides')
+---
+
+<BaseLayout title="Guides — Astro Content Lab">
+  <h1>Guides</h1>
+  <ul>
+    {guides.map((guide) => (
+      <li>
+        <a href={`/guides/${guide.id}`}>{guide.data.title}</a>
+        <p>{guide.data.description}</p>
+        <p>Difficulty: {guide.data.difficulty} · {guide.data.estimatedTime}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

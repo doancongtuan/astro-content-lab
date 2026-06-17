@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const compares = await getCollection('compares')
+---
+
+<BaseLayout title="Compares — Astro Content Lab">
+  <h1>Compares</h1>
+  <ul>
+    {compares.map((compare) => (
+      <li>
+        <a href={`/compares/${compare.id}`}>{compare.data.title}</a>
+        <p>{compare.data.description}</p>
+        <p>🏆 Winner: {compare.data.winner}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
