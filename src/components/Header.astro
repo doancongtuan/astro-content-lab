@@ -1,13 +1,71 @@
 ---
 ---
 
-<header>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/blog">Blog</a>
-    <a href="/reviews">Reviews</a>
-    <a href="/compares">Compares</a>
-    <a href="/guides">Guides</a>
-    <a href="/about">About</a>
-  </nav>
+<header class="site-header">
+  <div class="container-wide header-inner">
+    <a href="/" class="site-logo">Astro Content Lab</a>
+    <nav class="site-nav">
+      <a href="/blog">Blog</a>
+      <a href="/reviews">Reviews</a>
+      <a href="/compares">Compares</a>
+      <a href="/guides">Guides</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
 </header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .site-logo {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .site-logo:hover {
+    color: var(--color-primary);
+  }
+
+  .site-nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .site-nav a {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .site-nav a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .site-nav {
+      gap: 1rem;
+    }
+
+    .site-nav a {
+      font-size: 0.875rem;
+    }
+  }
+</style>
