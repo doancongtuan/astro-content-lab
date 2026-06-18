@@ -6,6 +6,8 @@ itemB: Astro
 winner: Depends
 verdict: WordPress wins when clients need to edit content. Astro wins when a developer controls the site and performance matters.
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/compares/wordpress-vs-astro.jpg
+heroImageAlt: WordPress vs Astro comparison
 ---
 
 ## WordPress vs Astro
@@ -22,6 +24,8 @@ That said, a well-optimized WordPress site with a good caching plugin and CDN ca
 
 ## Content editing
 
+![WordPress admin dashboard — familiar to millions](../../assets/images/compares/wordpress-vs-astro-2.jpg)
+
 WordPress wins here — no contest.
 
 The WordPress dashboard is one of the most usable content management interfaces ever built. Non-technical people figure it out quickly. Clients can add posts, update pages, and manage media without calling a developer.
@@ -31,6 +35,10 @@ Astro has no dashboard. Content lives in Markdown files. Editing requires either
 ## Security
 
 Astro wins significantly.
+
+WordPress gives non-technical users a complete editing environment.
+
+![Astro terminal workflow — clean, fast, developer-owned](../../assets/images/compares/wordpress-vs-astro-3.jpg)
 
 A static HTML site has almost no attack surface. There is no database to inject, no PHP to exploit, no login page to brute-force.
 

@@ -3,6 +3,8 @@ title: Hostinger Review 2026
 description: Hostinger is one of the most popular budget hosting providers. After using it for WordPress sites, here is my honest take on whether it is worth it.
 productName: Hostinger
 rating: 4.2
+heroImage: ../../assets/images/reviews/hostinger-review.jpg
+heroImageAlt: Hostinger hosting dashboard
 pros:
   - Genuinely cheap — promotional pricing starts under $3/mo
   - Fast setup — WordPress installs in under 2 minutes
@@ -30,6 +32,10 @@ Having used Hostinger for WordPress sites, here is what I actually think.
 ## What Hostinger does well
 
 **Setup speed.** The onboarding flow is genuinely good. New account to live WordPress site in under 5 minutes. The hPanel interface is cleaner than cPanel and easier to navigate for beginners.
+
+The control panel is genuinely one of the better ones in the budget hosting space.
+
+![Hostinger performance metrics](../../assets/images/reviews/hostinger-3.jpg)
 
 **Performance for the price.** Shared hosting at this price tier is often terrible. Hostinger is better than most. For a small blog or portfolio with moderate traffic, load times are acceptable.
 
@@ -68,6 +74,10 @@ Shared hosting means shared resources. If your site grows past a few thousand da
 | Cloud Startup | ~$9.99/mo | ~$19.99/mo | 48 months |
 
 *Prices approximate — check current rates before purchasing.*
+
+## Hostinger in action
+
+![Hostinger hPanel dashboard — clean and beginner friendly](../../assets/images/reviews/hostinger-2.jpg)
 
 ## Who should use Hostinger
 

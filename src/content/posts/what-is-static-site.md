@@ -2,6 +2,8 @@
 title: What is a Static Site? And What is Jamstack?
 description: Static sites, SSG, and Jamstack explained for WordPress users — what they mean, why they matter, and how Astro fits in.
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/posts/what-is-static-site.jpg
+heroImageAlt: Diagram showing static site generation vs dynamic rendering
 ---
 
 If you've only ever built sites on WordPress, the term "static site" probably sounds like a step backward. No database. No admin panel. No dynamic content. Just... files?

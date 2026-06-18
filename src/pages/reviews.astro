@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
 const reviews = await getCollection('reviews')
@@ -13,11 +14,25 @@ const reviews = await getCollection('reviews')
   <div class="post-list">
     {reviews.map((review) => (
       <a href={`/reviews/${review.id}`} class="post-item">
+        {review.data.heroImage && (
+          <div class="post-thumbnail">
+            <Image
+              src={review.data.heroImage}
+              alt={review.data.heroImageAlt || review.data.title}
+              width={400}
+              height={210}
+            />
+          </div>
+        )}
         <div class="post-item-content">
           <span class="badge">Review</span>
           <h2>{review.data.title}</h2>
           <p>{review.data.description}</p>
-          <p class="rating">{'★'.repeat(Math.floor(review.data.rating))}{'☆'.repeat(5 - Math.floor(review.data.rating))} {review.data.rating}/5</p>
+          <p class="rating">
+            {'★'.repeat(Math.floor(review.data.rating))}
+            {'☆'.repeat(5 - Math.floor(review.data.rating))}
+            {' '}{review.data.rating}/5
+          </p>
         </div>
         <span class="post-item-link">Read review →</span>
       </a>
@@ -31,6 +46,7 @@ const reviews = await getCollection('reviews')
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--color-border);
   }
+
   .page-header h1 { margin-bottom: 0.5rem; }
   .page-header p { color: var(--color-text-muted); margin: 0; }
 
@@ -43,26 +59,42 @@ const reviews = await getCollection('reviews')
   .post-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 1.5rem;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
     text-decoration: none;
     color: var(--color-text);
-    background: var(--color-bg);
     transition: all 0.2s;
-    gap: 1rem;
   }
 
   .post-item:hover {
     border-color: var(--color-primary);
     box-shadow: var(--shadow-sm);
     text-decoration: none;
-    color: var(--color-text);
+  }
+
+  .post-thumbnail {
+    flex-shrink: 0;
+    width: 120px;
+    height: 68px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-item-content {
+    flex: 1;
   }
 
   .post-item-content h2 {
-    font-size: 1.0625rem;
+    font-size: 1rem;
     margin: 0.35rem 0;
   }
 
@@ -96,6 +128,29 @@ const reviews = await getCollection('reviews')
   }
 
   @media (max-width: 640px) {
-    .post-item { flex-direction: column; align-items: flex-start; }
+    .post-item { flex-wrap: wrap; }
+    .post-thumbnail { width: 100%; height: 160px; }
   }
+  @media (max-width: 640px) {
+  .post-item {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .post-thumbnail {
+    width: 100%;
+    height: 180px;
+  }
+
+  .post-item-content {
+    width: 100%;
+  }
+
+  .post-item-link {
+    width: 100%;
+    text-align: right;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+}
 </style>

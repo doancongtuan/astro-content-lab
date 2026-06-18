@@ -1,7 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content'
+import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import ProjectBanner from '../../components/ProjectBanner.astro'
+import ProjectBanner from '../../Components/ProjectBanner.astro'
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides')
@@ -17,40 +18,46 @@ const { Content } = await render(guide)
 const publishedDate = new Date(guide.data.publishedAt).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 })
-
-const difficultyColors: Record<string, string> = {
-  beginner: 'badge-beginner',
-  intermediate: 'badge-intermediate',
-  advanced: 'badge-advanced',
-}
 ---
 
 <BaseLayout title={`${guide.data.title} — Astro Content Lab`}>
   <article class="post">
+
     <div class="post-header">
       <a href="/guides" class="back-link">← Back to Guides</a>
-      <span class={`badge ${difficultyColors[guide.data.difficulty]}`}>{guide.data.difficulty}</span>
+      <span class={`badge badge-${guide.data.difficulty}`}>
+        {guide.data.difficulty}
+      </span>
       <h1>{guide.data.title}</h1>
       <p class="post-desc">{guide.data.description}</p>
-      <div class="guide-meta-row">
+      <div class="guide-meta">
         <span>⏱ {guide.data.estimatedTime}</span>
-        <span>·</span>
+        <span class="separator">·</span>
         <span>Published {publishedDate}</span>
       </div>
     </div>
 
+    {guide.data.heroImage && (
+      <div class="hero-image">
+        <Image
+          src={guide.data.heroImage}
+          alt={guide.data.heroImageAlt || guide.data.title}
+          width={1200}
+          height={630}
+        />
+      </div>
+    )}
+
     <div class="post-body">
       <Content />
     </div>
+
   </article>
   <ProjectBanner />
 </BaseLayout>
 
 <style>
-  .post {
-    max-width: 680px;
-    margin: 0 auto;
-  }
+  .post { max-width: 680px; margin: 0 auto; }
 
   .back-link {
     display: inline-block;
@@ -68,13 +75,13 @@ const difficultyColors: Record<string, string> = {
     font-weight: 600;
     padding: 0.2rem 0.6rem;
     border-radius: 999px;
-    margin-bottom: 0.75rem;
     text-transform: capitalize;
+    margin-bottom: 0.75rem;
   }
 
-  .badge-beginner { background: #dcfce7; color: #15803d; }
+  .badge-beginner    { background: #dcfce7; color: #15803d; }
   .badge-intermediate { background: #fef9c3; color: #854d0e; }
-  .badge-advanced { background: #fee2e2; color: #b91c1c; }
+  .badge-advanced    { background: #fee2e2; color: #b91c1c; }
 
   .post-header {
     margin-bottom: 2rem;
@@ -83,19 +90,26 @@ const difficultyColors: Record<string, string> = {
   }
 
   .post-header h1 { margin-bottom: 0.75rem; }
+  .post-desc { font-size: 1.125rem; color: var(--color-text-muted); margin-bottom: 0.75rem; }
 
-  .post-desc {
-    font-size: 1.125rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .guide-meta-row {
+  .guide-meta {
     display: flex;
     gap: 0.5rem;
     font-size: 0.875rem;
     color: var(--color-text-muted);
+    align-items: center;
   }
 
+  .separator { opacity: 0.4; }
+
+  .hero-image {
+    margin-bottom: 2rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .hero-image img { width: 100%; height: auto; display: block; }
+
   .post-body { line-height: 1.8; }
+  
 </style>

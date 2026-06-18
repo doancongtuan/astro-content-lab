@@ -3,6 +3,8 @@ title: Vercel Review 2026
 description: Is Vercel the best place to deploy your Astro site? After using it for this project, here is my honest take.
 productName: Vercel
 rating: 4.8
+heroImage: ../../assets/images/reviews/vercel-review.jpg
+heroImageAlt: Vercel deployment dashboard showing successful build
 pros:
   - Free tier is genuinely generous
   - Auto-deploy on every GitHub push
@@ -25,6 +27,11 @@ Connect GitHub repo. Select project. Click deploy. Done.
 
 No server configuration. No SSH. No Nginx. Just a GitHub connection and a button.
 
+## Vercel in action
+
+![Vercel deployment dashboard — simple and fast](../../assets/images/reviews/vercel-2.jpg)
+
+
 ## What makes Vercel stand out
 
 For static Astro sites, Vercel is almost embarrassingly easy. It detects Astro automatically, sets the right build command, and deploys to a global CDN.
@@ -32,6 +39,10 @@ For static Astro sites, Vercel is almost embarrassingly easy. It detects Astro a
 Every push to your `main` branch triggers a new deploy. Every pull request or branch gets its own preview URL — so you can share a live preview before merging.
 
 ## The free tier reality
+
+Every deployment gets its own URL and build log.
+
+![Vercel analytics and performance overview](../../assets/images/reviews/vercel-3.jpg)
 
 The free Hobby plan covers most personal projects comfortably:
 

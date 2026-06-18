@@ -4,6 +4,8 @@ description: A step-by-step guide to setting up Content Collections in Astro 6 â
 difficulty: beginner
 estimatedTime: 20 minutes
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/guides/content-collections-2.jpg
+heroImageAlt: Vercel import repository screen
 ---
 
 ## How to Set Up Content Collections in Astro 6
@@ -111,3 +113,11 @@ const { Content } = await render(post)
 **Using `post.render()`:** Use `render(post)` imported from `astro:content` instead.
 
 **Collection not loading:** Restart the dev server after adding a new collection. Astro sometimes needs a restart to pick up new collection config.
+
+## Content Collections in VS Code
+
+![content.config.ts in VS Code with Zod schema](../../assets/images/guides/content-collections-2.jpg)
+
+The schema definition gives you TypeScript autocomplete for every field.
+
+![getCollection results in the browser](../../assets/images/guides/content-collections-3.jpg)

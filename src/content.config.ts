@@ -3,16 +3,18 @@ import { glob } from 'astro/loaders'
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     publishedAt: z.date(),
+    heroImage: image().optional(),
+    heroImageAlt: z.string().optional(),
   }),
 })
 
 const reviews = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/reviews' }),
-  schema: z.object({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/reviews' }),
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     productName: z.string(),
@@ -21,12 +23,14 @@ const reviews = defineCollection({
     cons: z.array(z.string()),
     verdict: z.string(),
     publishedAt: z.date(),
+    heroImage: image().optional(),
+    heroImageAlt: z.string().optional(),
   }),
 })
 
 const compares = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/compares' }),
-  schema: z.object({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/compares' }),
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     itemA: z.string(),
@@ -34,17 +38,21 @@ const compares = defineCollection({
     winner: z.string(),
     verdict: z.string(),
     publishedAt: z.date(),
+    heroImage: image().optional(),
+    heroImageAlt: z.string().optional(),
   }),
 })
 
 const guides = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/guides' }),
-  schema: z.object({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/guides' }),
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
     estimatedTime: z.string(),
     publishedAt: z.date(),
+    heroImage: image().optional(),
+    heroImageAlt: z.string().optional(),
   }),
 })
 

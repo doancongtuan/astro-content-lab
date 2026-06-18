@@ -2,8 +2,13 @@
 title: What is MDX and Why Does Astro Use It?
 description: MDX lets you use components inside Markdown. Here is what that means in practice and why it matters for content sites.
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/posts/what-is-mdx.jpg
+heroImageAlt: VS Code showing MDX file with component imports
 ---
 
+import { Image } from 'astro:assets'
+import mdxImage2 from '../../assets/images/posts/what-is-mdx-2.jpg'
+import mdxImage3 from '../../assets/images/posts/what-is-mdx-3.jpg'
 import Callout from '../../components/Callout.astro'
 
 If you've written content in Markdown before, you know its limits.
@@ -93,6 +98,52 @@ More text here.
 <Callout type="tip" title="You're reading an MDX file right now">
 This post itself is a `.mdx` file. The colored boxes you see are Callout components imported at the top of this file and dropped inline — exactly the way MDX is meant to be used.
 </Callout>
+
+
+
+## Method 1 vs Method 2: which should you use?
+
+**Method 1 — Markdown syntax:**
+
+```bash
+![MDX components render inline with your content](../../assets/images/posts/what-is-mdx-2.jpg)
+```
+
+![MDX components render inline with your content](../../assets/images/posts/what-is-mdx-2.jpg)
+
+Simple. Works in `.md` and `.mdx`. No import needed. Best for decorative images where exact dimensions don't matter.
+
+**Method 2 — Astro Image component:**
+
+```bash
+<Image
+  src={mdxImage3}
+  alt="Astro Image component gives you full control over optimization"
+  width={800}
+  height={420}
+/>
+<!--Note-->
+
+You need to import:
+import { Image } from 'astro:assets'
+import mdxImage2 from '../../assets/images/posts/what-is-mdx-2.jpg'
+import mdxImage3 from '../../assets/images/posts/what-is-mdx-3.jpg'
+
+```
+
+<Image
+  src={mdxImage3}
+  alt="Astro Image component gives you full control over optimization"
+  width={800}
+  height={420}
+/>
+
+More control. Explicit width and height. Better for hero images or images where you need precise lazy loading behavior. Only works in `.mdx` files.
+
+**When to use which:**
+
+- Use Markdown `![]()` for quick inline images in any content file
+- Use `<Image />` component when you need explicit dimensions, format control, or are inside an `.mdx` file and already importing components
 
 ## When to use MD vs MDX
 

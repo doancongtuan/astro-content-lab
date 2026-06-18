@@ -6,6 +6,8 @@ itemB: Next.js
 winner: Depends
 verdict: Astro wins for content-heavy static sites. Next.js wins for web applications and dynamic experiences.
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/compares/astro-vs-nextjs.jpg
+heroImageAlt: Astro vs Next.js comparison
 ---
 
 ## Astro vs Next.js
@@ -15,6 +17,11 @@ Both are modern JavaScript frameworks. Both are popular. Both are well-maintaine
 Choosing between them based on popularity or hype is the wrong approach. The right question is: what are you building?
 
 ## The core difference
+
+## Side by side
+
+![Astro build output — zero JavaScript by default](../../assets/images/compares/astro-vs-nextjs-2.jpg)
+
 
 **Astro** is designed for content sites. It pre-renders everything to static HTML by default. JavaScript ships to the browser only when explicitly added. The result is fast, lightweight pages with minimal client-side overhead.
 
@@ -35,6 +42,10 @@ In practice, a well-built Astro content site consistently outscores a comparable
 ## Developer experience
 
 Both are excellent, but for different workflows.
+
+Astro's output is plain HTML. Next.js ships a React runtime on every page.
+
+![Next.js dashboard capabilities](../../assets/images/compares/astro-vs-nextjs-3.jpg)
 
 Astro's `.astro` component format is close to HTML — familiar to anyone who has written templates before. The learning curve for content-focused work is gentle.
 

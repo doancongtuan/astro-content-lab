@@ -2,6 +2,8 @@
 title: What is Static Site Generation and Why Should You Care?
 description: SSG explained for WordPress users — why pre-built HTML is faster, cheaper and more secure than dynamic CMS.
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/posts/what-is-static-generation-2.jpg
+heroImageAlt: Diagram showing static site generation vs dynamic rendering
 ---
 
 If you've used WordPress, you know how it works: someone visits your site, WordPress queries the database, assembles the page from PHP templates, and sends HTML back to the browser. Every. Single. Request.
@@ -29,6 +31,10 @@ The difference in speed is not subtle. A static HTML file served from a CDN take
 
 ## Why this matters for real sites
 
+![Static sites consistently score higher on Core Web Vitals](../../assets/images/compares/wordpress-vs-astro-2.jpg)
+
+WordPress gives non-technical users a complete editing environment.
+
 **Speed.** Static sites consistently score higher on Core Web Vitals. No PHP execution. No database queries. Just files.
 
 **Security.** There's no database to inject, no PHP to exploit, no admin login page to brute-force. The attack surface is nearly zero.
@@ -39,7 +45,13 @@ The difference in speed is not subtle. A static HTML file served from a CDN take
 
 ## The real limitation
 
+**Method 2 — Astro Image component:**
+
+![Astro terminal workflow — clean, fast, developer-owned](../../assets/images/compares/wordpress-vs-astro-3.jpg)
+
 Static sites are built at deploy time. If your content changes, you need to rebuild and redeploy.
+
+**Method 2 — Astro Image component:**
 
 For a blog that publishes a few times a week, that's fine. For a site that needs real-time data — stock prices, user accounts, live inventory — static generation alone isn't enough.
 

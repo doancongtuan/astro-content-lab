@@ -2,6 +2,8 @@
 title: Hello World
 description: Every developer starts here. So do I.
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/posts/hello-world.jpg
+heroImageAlt: Terminal showing Hello World in the browser for the first time
 ---
 
 Every programming language. Every framework. Every course. Every tutorial.
@@ -36,6 +38,8 @@ Just a file.
 
 ## What Markdown looks like
 
+![A bench against a wall — simple, like a Hello World](../../assets/images/posts/hello-world.jpg)
+
 Writing in Markdown feels like writing in Notepad — except everything renders cleanly:
 
 **Bold text** looks like this. *Italic* like this. And `inline code` like this.
@@ -59,6 +63,28 @@ And a list looks like this:
 - You don't need Elementor to have a good-looking site
 
 ---
+
+## Two ways to add images in Astro
+
+**Method 1: Plain Markdown syntax**
+
+```bash
+![A quiet bench — sometimes the simplest things say the most](../../assets/images/posts/hello-world-2.jpg)
+This is plain Markdown. Works in both `.md` and `.mdx` files. No import needed. Fast to write.
+
+![Another view — Markdown keeps writing simple](../../assets/images/posts/hello-world-3.jpg)
+The tradeoff: Astro still optimizes these images, but you have less control over width, height, and loading behavior.
+```
+### Here are results:
+
+![A quiet bench — sometimes the simplest things say the most](../../assets/images/posts/hello-world-2.jpg)
+
+This is plain Markdown. Works in both `.md` and `.mdx` files. No import needed. Fast to write.
+
+![Another view — Markdown keeps writing simple](../../assets/images/posts/hello-world-3.jpg)
+
+The tradeoff: Astro still optimizes these images, but you have less control over width, height, and loading behavior.
+
 
 ## To whoever is reading this
 

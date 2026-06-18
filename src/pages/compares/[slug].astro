@@ -1,8 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content'
+import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import ProjectBanner from '../../components/ProjectBanner.astro'
-
+import ProjectBanner from '../../Components/ProjectBanner.astro'
 export async function getStaticPaths() {
   const compares = await getCollection('compares')
   return compares.map((compare) => ({
@@ -21,6 +21,7 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
 
 <BaseLayout title={`${compare.data.title} — Astro Content Lab`}>
   <article class="post">
+
     <div class="post-header">
       <a href="/compares" class="back-link">← Back to Comparisons</a>
       <span class="badge">Compare</span>
@@ -29,11 +30,22 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
       <p class="post-meta">Published {publishedDate}</p>
     </div>
 
-    <div class="compare-meta">
+    {compare.data.heroImage && (
+      <div class="hero-image">
+        <Image
+          src={compare.data.heroImage}
+          alt={compare.data.heroImageAlt || compare.data.title}
+          width={1200}
+          height={630}
+        />
+      </div>
+    )}
+
+    <div class="compare-vs">
       <div class="compare-item">
         <h3>{compare.data.itemA}</h3>
       </div>
-      <div class="compare-vs">VS</div>
+      <div class="vs-badge">VS</div>
       <div class="compare-item">
         <h3>{compare.data.itemB}</h3>
       </div>
@@ -50,15 +62,13 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
     <div class="post-body">
       <Content />
     </div>
+
   </article>
   <ProjectBanner />
 </BaseLayout>
 
 <style>
-  .post {
-    max-width: 680px;
-    margin: 0 auto;
-  }
+  .post { max-width: 680px; margin: 0 auto; }
 
   .back-link {
     display: inline-block;
@@ -88,20 +98,18 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
   }
 
   .post-header h1 { margin-bottom: 0.75rem; }
+  .post-desc { font-size: 1.125rem; color: var(--color-text-muted); margin-bottom: 0.5rem; }
+  .post-meta { font-size: 0.875rem; color: var(--color-text-muted); margin: 0; }
 
-  .post-desc {
-    font-size: 1.125rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.5rem;
+  .hero-image {
+    margin-bottom: 2rem;
+    border-radius: var(--radius);
+    overflow: hidden;
   }
 
-  .post-meta {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    margin: 0;
-  }
+  .hero-image img { width: 100%; height: auto; display: block; }
 
-  .compare-meta {
+  .compare-vs {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -113,22 +121,17 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
     text-align: center;
   }
 
-  .compare-item {
-    flex: 1;
-  }
+  .compare-item { flex: 1; }
+  .compare-item h3 { margin: 0; font-size: 1.125rem; }
 
-  .compare-item h3 {
-    margin: 0;
-    font-size: 1.125rem;
-  }
-
-  .compare-vs {
+  .vs-badge {
     font-weight: 700;
     font-size: 0.875rem;
     color: var(--color-text-muted);
     background: var(--color-border);
     padding: 0.35rem 0.75rem;
     border-radius: 999px;
+    flex-shrink: 0;
   }
 
   .winner-box {
@@ -150,4 +153,5 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
   }
 
   .post-body { line-height: 1.8; }
+
 </style>

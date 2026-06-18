@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
 const guides = await getCollection('guides')
@@ -13,8 +14,20 @@ const guides = await getCollection('guides')
   <div class="post-list">
     {guides.map((guide) => (
       <a href={`/guides/${guide.id}`} class="post-item">
+        {guide.data.heroImage && (
+          <div class="post-thumbnail">
+            <Image
+              src={guide.data.heroImage}
+              alt={guide.data.heroImageAlt || guide.data.title}
+              width={400}
+              height={210}
+            />
+          </div>
+        )}
         <div class="post-item-content">
-          <span class={`badge badge-${guide.data.difficulty}`}>{guide.data.difficulty}</span>
+          <span class={`badge badge-${guide.data.difficulty}`}>
+            {guide.data.difficulty}
+          </span>
           <h2>{guide.data.title}</h2>
           <p>{guide.data.description}</p>
           <p class="meta">⏱ {guide.data.estimatedTime}</p>
@@ -31,6 +44,7 @@ const guides = await getCollection('guides')
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--color-border);
   }
+
   .page-header h1 { margin-bottom: 0.5rem; }
   .page-header p { color: var(--color-text-muted); margin: 0; }
 
@@ -43,15 +57,14 @@ const guides = await getCollection('guides')
   .post-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 1.5rem;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
     text-decoration: none;
     color: var(--color-text);
     background: var(--color-bg);
     transition: all 0.2s;
-    gap: 1rem;
   }
 
   .post-item:hover {
@@ -61,15 +74,42 @@ const guides = await getCollection('guides')
     color: var(--color-text);
   }
 
+  .post-thumbnail {
+    flex-shrink: 0;
+    width: 120px;
+    height: 68px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
   .post-item-content h2 {
-    font-size: 1.0625rem;
-    margin: 0.35rem 0;
+    font-size: 1rem;
+    margin: 0 0 0.35rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .post-item-content p {
     font-size: 0.875rem;
     color: var(--color-text-muted);
     margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .post-item-link {
@@ -80,21 +120,31 @@ const guides = await getCollection('guides')
     flex-shrink: 0;
   }
 
-  .badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-  }
-
-  .badge-beginner { background: #dcfce7; color: #15803d; }
-  .badge-intermediate { background: #fef9c3; color: #854d0e; }
-  .badge-advanced { background: #fee2e2; color: #b91c1c; }
-
-  .meta { margin-top: 0.35rem !important; }
-
   @media (max-width: 640px) {
-    .post-item { flex-direction: column; align-items: flex-start; }
+    .post-item {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .post-thumbnail {
+      width: 100%;
+      height: 180px;
+    }
+
+    .post-item-content h2 {
+      white-space: normal;
+    }
+
+    .post-item-content p {
+      -webkit-line-clamp: 3;
+    }
+
+    .post-item-link {
+      display: block;
+      text-align: right;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--color-border);
+    }
   }
 </style>

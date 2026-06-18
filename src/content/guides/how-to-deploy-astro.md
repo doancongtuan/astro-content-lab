@@ -4,6 +4,8 @@ description: Step by step guide to deploying your Astro site to Vercel — from 
 difficulty: beginner
 estimatedTime: 15 minutes
 publishedAt: 2026-06-17T00:00:00Z
+heroImage: ../../assets/images/guides/how-to-deploy-astro.jpg
+heroImageAlt: Vercel import repository screen
 ---
 
 ## How to Deploy Astro to Vercel
@@ -43,6 +45,12 @@ Do not change these. Vercel has built-in support for Astro and sets everything c
 If you have environment variables (`.env` file), add them here under **Environment Variables** before deploying.
 
 ## Step 4: Deploy
+
+## The deployment in screenshots
+
+![Vercel import repository screen](../../assets/images/guides/deploy-astro-2.jpg)
+
+Vercel auto-detects Astro. No configuration needed.
 
 Click **Deploy**.
 
@@ -87,6 +95,11 @@ To use your own domain instead of `your-project.vercel.app`:
 4. Update your domain's DNS records to point to Vercel
 
 Vercel provides the exact DNS values to add. SSL certificate is provisioned automatically.
+
+
+![Vercel successful deployment screen with live URL](../../assets/images/guides/deploy-astro-3.jpg)
+
+Green checkmark. Live URL. Done.
 
 ## Troubleshooting common issues
 
