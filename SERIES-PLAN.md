@@ -14,29 +14,27 @@
 
 ---
 
-## Part 1 — Astro Foundations (7 bài)
+## Part 1 — Astro Foundations (6 bài)
 
 - [x] Bài 1: What is Astro and who is it for?
 - [x] Bài 2: Setting up your first Astro project
 - [x] Bài 3: Pages, Layouts and Components
-- [~] Bài 4: Styling in Astro — Plain CSS first
-- [ ] Bài 5: Switch to Tailwind CSS
-- [ ] Bài 6: Static Site Generation explained
-- [x] Bài 7: Deploy Astro to Vercel
+- [x] Bài 4: Styling in Astro — Plain CSS first
+- [x] Bài 5: Static Site Generation explained
+- [x] Bài 6: Deploy Astro to Vercel
 
----
+## Part 2 — Content with MD/MDX/YAML (13 bài)
 
-## Part 2 — Content with MD/MDX/YAML (12 bài)
-
-- [x] Bài 8: Writing content with Markdown
-- [x] Bài 9: Content Collections — the right way to manage content
-- [x] Bài 10: Dynamic routes and blog listing page
-- [x] Bài 11: MDX — use components inside your content
-- [x] Bài 12: Build a review page with Content Collections
-- [x] Bài 13: Build a comparison page
-- [x] Bài 14: Build a guide page
-- [ ] Bài 15: Images in Astro — local images
-- [ ] Bài 16: Images in Astro — Cloudinary
+- [x] Bài 7: Writing content with Markdown
+- [x] Bài 8: Content Collections — the right way to manage content
+- [x] Bài 9: Dynamic routes and blog listing page
+- [x] Bài 10: MDX — use components inside your content
+- [x] Bài 11: Build a review page with Content Collections
+- [x] Bài 12: Build a comparison page
+- [x] Bài 13: Build a guide page
+- [ ] Bài 14: Images in Astro — local images
+- [ ] Bài 15: Images in Astro — Cloudinary
+- [ ] Bài 16: Switch to Tailwind CSS
 - [ ] Bài 17: SEO in Astro
 - [ ] Bài 18: Sitemap and robots.txt
 - [ ] Bài 19: Build a component library

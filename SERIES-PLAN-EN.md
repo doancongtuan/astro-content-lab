@@ -114,28 +114,7 @@ src/styles/
 
 ---
 
-### Article 5 — Switch to Tailwind CSS
-**Goal:** Understand why Tailwind, know how to integrate it into Astro.  
-**Covers:**
-- Problems with plain CSS at scale
-- What Tailwind is — utility-first CSS
-- Tailwind vs plain CSS: writing speed, consistency, purge unused CSS
-- Install Tailwind: `npx astro add tailwind`
-- Refactor all CSS to Tailwind
-- Typography plugin for content
-
-**Code:**
-```
-- Remove global.css
-- Add tailwind.config.mjs
-- Refactor Header, BaseLayout, home page to Tailwind classes
-```
-
-**Outcome:** Entire site uses Tailwind, ready to build better-looking components.
-
----
-
-### Article 6 — Static Site Generation explained
+### Article 5 — Static Site Generation explained
 **Goal:** Understand what SSG is and why Astro is fast.  
 **Covers:**
 - What SSG is: pre-build HTML, no runtime server processing
@@ -155,7 +134,7 @@ ls dist/
 
 ---
 
-### Article 7 — Deploy Astro to Vercel
+### Article 6 — Deploy Astro to Vercel
 **Goal:** Site live on the internet, auto-deploy on GitHub push.  
 **Covers:**
 - Create Vercel account
@@ -176,7 +155,7 @@ Push code → GitHub → Vercel build → live
 
 ## Part 2 — Content with MD/MDX/YAML (12 articles)
 
-### Article 8 — Writing content with Markdown
+### Article 7 — Writing content with Markdown
 **Goal:** Write the first blog post using Markdown in Astro.  
 **Covers:**
 - Basic Markdown syntax: headings, bold, italic, lists, links, images, code blocks
@@ -196,7 +175,7 @@ src/pages/blog/
 
 ---
 
-### Article 9 — Content Collections: the right way to manage content
+### Article 8 — Content Collections: the right way to manage content
 **Goal:** Understand why Content Collections are needed, know how to create a schema.  
 **Covers:**
 - Problems with `src/pages/*.md`: no validation, no TypeScript
@@ -222,7 +201,7 @@ src/
 
 ---
 
-### Article 10 — Dynamic routes and blog listing page
+### Article 9 — Dynamic routes and blog listing page
 **Goal:** Create a listing page and detail page from Content Collections.  
 **Covers:**
 - What dynamic route `[slug].astro` is
@@ -245,7 +224,7 @@ src/pages/
 
 ---
 
-### Article 11 — MDX: use components inside your content
+### Article 10 — MDX: use components inside your content
 **Goal:** Insert components into the middle of a post.  
 **Covers:**
 - How MDX differs from Markdown
@@ -267,7 +246,7 @@ src/
 
 ---
 
-### Article 12 — Build a review page with Content Collections
+### Article 11 — Build a review page with Content Collections
 **Goal:** Create a structured, good-looking, usable review page.  
 **Covers:**
 - Schema for review: `productName`, `rating`, `pros`, `cons`, `verdict`
@@ -296,7 +275,7 @@ src/
 
 ---
 
-### Article 13 — Build a comparison page
+### Article 12 — Build a comparison page
 **Goal:** Create a product comparison page with a comparison table.  
 **Covers:**
 - Schema for compare: `itemA`, `itemB`, `winner`, `comparisonRows`
@@ -321,7 +300,7 @@ src/
 
 ---
 
-### Article 14 — Build a guide page
+### Article 13 — Build a guide page
 **Goal:** Create a step-by-step guide page.  
 **Covers:**
 - Schema for guide: `difficulty`, `estimatedTime`
@@ -346,7 +325,7 @@ src/
 
 ---
 
-### Article 15 — Images in Astro: local images
+### Article 14 — Images in Astro: local images
 **Goal:** Add real images to posts, automatically optimized.  
 **Covers:**
 - Astro `<Image />` component
@@ -370,7 +349,7 @@ src/
 
 ---
 
-### Article 16 — Images in Astro: Cloudinary
+### Article 15 — Images in Astro: Cloudinary
 **Goal:** Use Cloudinary to host and serve optimized images.  
 **Covers:**
 - What Cloudinary is and why use it
@@ -388,6 +367,27 @@ heroImage: https://res.cloudinary.com/your-cloud/image/upload/v1/posts/hero.jpg
 ```
 
 **Outcome:** Images served from Cloudinary CDN, auto-optimized per device.
+
+---
+
+### Article 16 — Switch to Tailwind CSS
+**Goal:** Understand why Tailwind, know how to integrate it into Astro.  
+**Covers:**
+- Problems with plain CSS at scale
+- What Tailwind is — utility-first CSS
+- Tailwind vs plain CSS: writing speed, consistency, purge unused CSS
+- Install Tailwind: `npx astro add tailwind`
+- Refactor all CSS to Tailwind
+- Typography plugin for content
+
+**Code:**
+```
+- Remove global.css
+- Add tailwind.config.mjs
+- Refactor Header, BaseLayout, home page to Tailwind classes
+```
+
+**Outcome:** Entire site uses Tailwind, ready to build better-looking components.
 
 ---
 
