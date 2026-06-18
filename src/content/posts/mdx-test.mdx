@@ -1,29 +1,113 @@
 ---
-title: Testing MDX in Astro
-description: How to use components inside markdown
+title: What is MDX and Why Does Astro Use It?
+description: MDX lets you use components inside Markdown. Here is what that means in practice and why it matters for content sites.
 publishedAt: 2026-06-17T00:00:00Z
 ---
 
 import Callout from '../../components/Callout.astro'
 
+If you've written content in Markdown before, you know its limits.
+
+Markdown is great for text. Headings, paragraphs, lists, code blocks — all clean and readable. But the moment you need something custom — a callout box, a rating widget, a comparison table — Markdown runs out of tools.
+
+That's where MDX comes in.
+
 ## What is MDX?
 
-MDX lets you use components inside markdown. This is very powerful for content sites.
+MDX is Markdown with the ability to import and use components directly inside your content.
 
-<Callout type="info" emoji="👾" title="Good to know">
-  Astro supports MDX out of the box with the MDX integration.
+<Callout type="info" title="Simple definition">
+MDX = Markdown + JSX. Write text like Markdown, drop in components like React. Astro supports it natively with one integration.
 </Callout>
 
-## Why use MDX?
+Instead of being stuck with plain text, you can import any Astro component and use it inline:
 
-Normal markdown is limited. You can only use headings, lists, and code blocks.
+```mdx
+import Callout from '../../components/Callout.astro'
+
+# My post
 
 <Callout type="tip" title="Pro tip">
-  Use MDX when you need custom UI inside your content — like callouts, rating boxes, or comparison tables.
+  This renders as a styled box inside your content.
 </Callout>
 
-## Warning
+Back to normal text.
+```
 
-<Callout type="warning" title="Watch out">
-  MDX files use `.mdx` extension, not `.md`. Don't mix them up.
+## Why Astro uses MDX
+
+Astro is built for content sites. Content sites need more than plain text — they need callout boxes, rating displays, comparison tables, affiliate CTAs, FAQ sections.
+
+Without MDX, you have two bad options:
+
+- Write raw HTML inside Markdown — ugly and fragile
+- Put all UI logic in the page template — inflexible, can't vary per article
+
+MDX gives you a third option: define components once, use them anywhere in your content — inline, naturally, without leaving the writing flow.
+
+<Callout type="warning" title="Astro 6 note">
+When using MDX with Content Collections, update your glob pattern to match both file types: `**/*.{md,mdx}`. Without this, your `.mdx` files won't be picked up by getCollection().
+</Callout>
+
+## The practical difference
+
+**Plain Markdown post:**
+You write text. Astro renders it. Every post looks the same structurally.
+
+**MDX post:**
+You write text, but you can also insert components wherever they add value. A review post can have a ProsConsBox. A guide can have a warning Callout. A comparison can have a full ComparisonTable — all inline, all part of the content file itself.
+
+## How to use MDX in Astro
+
+**Step 1:** Install the MDX integration:
+
+```bash
+npx astro add mdx
+```
+
+**Step 2:** Update your Content Collections glob pattern:
+
+```typescript
+loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' })
+```
+
+**Step 3:** Create a `.mdx` file and import components at the top:
+
+```mdx
+---
+title: My MDX Post
+publishedAt: 2026-06-17T00:00:00Z
+---
+
+import Callout from '../../components/Callout.astro'
+
+Normal Markdown text here.
+
+<Callout type="tip" title="Remember">
+  Components are imported after the frontmatter, before the body content.
+</Callout>
+
+More text here.
+```
+
+<Callout type="tip" title="You're reading an MDX file right now">
+This post itself is a `.mdx` file. The colored boxes you see are Callout components imported at the top of this file and dropped inline — exactly the way MDX is meant to be used.
+</Callout>
+
+## When to use MD vs MDX
+
+Use plain `.md` when the post is text-only — no custom components needed. Simpler, faster to parse, easier to read in a code editor.
+
+Use `.mdx` when the post needs UI components — callouts, rating boxes, comparison tables, CTAs.
+
+Don't convert everything to MDX by default. Keep `.md` files as `.md` and only reach for `.mdx` when you actually need a component.
+
+## What this means for WordPress users
+
+In WordPress, you'd handle this with shortcodes or Gutenberg blocks. MDX is the modern equivalent — but instead of clicking a block button in the editor, you import a component and use it as JSX.
+
+The tradeoff: more control, slightly more technical. If your content is managed by non-developers, you'll want to pair MDX with a CMS editor like TinaCMS that can wrap these components in a visual block interface.
+
+<Callout type="info" title="Coming up in this series">
+Part 3 covers TinaCMS — which lets non-developers insert MDX components through a visual editor, without ever touching raw MDX syntax. Think Gutenberg blocks, but for Astro.
 </Callout>

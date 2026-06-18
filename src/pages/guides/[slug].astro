@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import ProjectBanner from '../../components/ProjectBanner.astro'
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides')
@@ -42,6 +43,7 @@ const difficultyColors: Record<string, string> = {
       <Content />
     </div>
   </article>
+  <ProjectBanner />
 </BaseLayout>
 
 <style>

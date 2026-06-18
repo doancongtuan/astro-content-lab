@@ -1,0 +1,96 @@
+---
+---
+
+<div class="project-banner">
+  <div class="project-banner-inner">
+    <div class="project-banner-text">
+      <p class="project-banner-title">📦 This is a live demo project</p>
+      <p class="project-banner-desc">Built step by step in the series <strong>Learn Astro from Scratch</strong> — read the full guide on doancongtuan.com.</p>
+    </div>
+    <div class="project-banner-links">
+      <a href="https://github.com/doancongtuan/astro-content-lab" target="_blank" class="banner-btn banner-btn-github">
+        View Source →
+      </a>
+      <a href="https://doancongtuan.com" target="_blank" class="banner-btn banner-btn-demo">
+        Read the Series →
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .project-banner {
+    margin-top: 3rem;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #ede9fe, #dbeafe);
+    border: 1px solid #c4b5fd;
+    border-radius: var(--radius);
+  }
+
+  .project-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .project-banner-title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    margin: 0 0 0.25rem;
+    color: #4c1d95;
+  }
+
+  .project-banner-desc {
+    font-size: 0.875rem;
+    color: #5b21b6;
+    margin: 0;
+  }
+
+  .project-banner-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .banner-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .banner-btn-github {
+    background: #1e1b4b;
+    color: #fff;
+  }
+
+  .banner-btn-github:hover {
+    background: #312e81;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .banner-btn-demo {
+    background: #fff;
+    color: #4c1d95;
+    border: 1px solid #c4b5fd;
+  }
+
+  .banner-btn-demo:hover {
+    background: #f5f3ff;
+    text-decoration: none;
+    color: #4c1d95;
+  }
+
+  @media (max-width: 640px) {
+    .project-banner-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

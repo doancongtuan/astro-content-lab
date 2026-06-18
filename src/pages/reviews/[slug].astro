@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import ProjectBanner from '../../components/ProjectBanner.astro'
 
 export async function getStaticPaths() {
   const reviews = await getCollection('reviews')
@@ -54,6 +55,7 @@ const stars = '★'.repeat(Math.floor(review.data.rating)) + '☆'.repeat(5 - Ma
       <Content />
     </div>
   </article>
+  <ProjectBanner />
 </BaseLayout>
 
 <style>
