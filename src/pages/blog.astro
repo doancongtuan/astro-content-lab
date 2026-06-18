@@ -14,16 +14,28 @@ const posts = await getCollection('posts')
   <div class="post-list">
     {posts.map((post) => (
       <a href={`/blog/${post.id}`} class="post-item">
-        {post.data.heroImage && (
+       
+        {(post.data.heroImage || post.data.heroImageCloudinary) && (
           <div class="post-thumbnail">
-            <Image
-              src={post.data.heroImage}
-              alt={post.data.heroImageAlt || post.data.title}
-              width={400}
-              height={210}
-            />
+            {post.data.heroImage ? (
+              <Image
+                src={post.data.heroImage}
+                alt={post.data.heroImageAlt || post.data.title}
+                width={400}
+                height={210}
+              />
+            ) : (
+              <img
+                src={post.data.heroImageCloudinary}
+                alt={post.data.heroImageAlt || post.data.title}
+                width={400}
+                height={210}
+                loading="lazy"
+              />
+            )}
           </div>
         )}
+
         <div class="post-item-content">
           <h2>{post.data.title}</h2>
           <p>{post.data.description}</p>

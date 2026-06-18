@@ -9,6 +9,7 @@ const posts = defineCollection({
     publishedAt: z.date(),
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
+    heroImageCloudinary: z.string().optional(),
   }),
 })
 

@@ -2,7 +2,11 @@
 title: Why I Moved From WordPress to Astro
 description: After 10 years of building WordPress sites, here is what finally pushed me to try something different.
 publishedAt: 2026-06-17T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-3.jpg
+heroImageAlt: Moved From WordPress to Astro
 ---
+
+
 
 I've built WordPress sites since 2013. Client blogs, WooCommerce stores, affiliate sites, coupon sites — all of it on WordPress.
 
@@ -13,6 +17,9 @@ WordPress is great. I still recommend it to clients who need to manage their own
 **Plugin conflicts.** Every WordPress site I've ever run has had at least one incident where a plugin update broke something. Sometimes it was a widget. Sometimes it was the whole checkout flow. Once it was the entire homepage — right before a client presentation.
 
 **Core Web Vitals.** Google started measuring page speed seriously and WordPress sites started bleeding rankings. I spent months installing caching plugins, optimizing images, removing bloat. The scores improved. Then another plugin update would undo half the work.
+
+![Google started measuring page speed seriously and WordPress sites](https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785821/samples/coffee.jpg)
+
 
 **Security.** WordPress is the most attacked CMS on the internet — not because it's poorly built, but because it's everywhere. I've had sites hacked through outdated plugins. Not fun to explain to a client.
 
@@ -27,6 +34,8 @@ Content lives in files. Markdown files. Structured, readable, version-controlled
 The site builds to static HTML. Fast by default. No caching plugins needed.
 
 ## What Astro doesn't do
+
+![Astro is not a WordPress replacement for every use case](https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-4.jpg)
 
 I want to be honest here: Astro is not a WordPress replacement for every use case.
 

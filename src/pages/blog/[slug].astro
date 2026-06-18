@@ -31,16 +31,26 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
       <p class="post-meta">Published {publishedDate}</p>
     </div>
 
-    {post.data.heroImage && (
+    {post.data.heroImage ? (
       <div class="hero-image">
         <Image
-          src={post.data.heroImage}
-          alt={post.data.heroImageAlt || post.data.title}
-          width={1200}
-          height={630}
+        src={post.data.heroImage}
+        alt={post.data.heroImageAlt || post.data.title}
+        width={1200}
+        height={630}
+      />
+      </div>
+    ) : post.data.heroImageCloudinary ? (
+      <div class="hero-image">
+        <img
+        src={post.data.heroImageCloudinary}
+        alt={post.data.heroImageAlt || post.data.title}
+        width={1200}
+        height={630}
+        loading="lazy"
         />
       </div>
-    )}
+) : null}
 
     <div class="post-body">
       <Content />
