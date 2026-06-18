@@ -12,12 +12,88 @@ export async function getStaticPaths() {
 
 const { guide } = Astro.props
 const { Content } = await render(guide)
+
+const publishedDate = new Date(guide.data.publishedAt).toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+})
+
+const difficultyColors: Record<string, string> = {
+  beginner: 'badge-beginner',
+  intermediate: 'badge-intermediate',
+  advanced: 'badge-advanced',
+}
 ---
 
-<BaseLayout title={guide.data.title}>
-  <h1>{guide.data.title}</h1>
-  <p>{guide.data.description}</p>
-  <p>Difficulty: {guide.data.difficulty}</p>
-  <p>Estimated time: {guide.data.estimatedTime}</p>
-  <Content />
+<BaseLayout title={`${guide.data.title} — Astro Content Lab`}>
+  <article class="post">
+    <div class="post-header">
+      <a href="/guides" class="back-link">← Back to Guides</a>
+      <span class={`badge ${difficultyColors[guide.data.difficulty]}`}>{guide.data.difficulty}</span>
+      <h1>{guide.data.title}</h1>
+      <p class="post-desc">{guide.data.description}</p>
+      <div class="guide-meta-row">
+        <span>⏱ {guide.data.estimatedTime}</span>
+        <span>·</span>
+        <span>Published {publishedDate}</span>
+      </div>
+    </div>
+
+    <div class="post-body">
+      <Content />
+    </div>
+  </article>
 </BaseLayout>
+
+<style>
+  .post {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .back-link:hover { color: var(--color-primary); }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+    text-transform: capitalize;
+  }
+
+  .badge-beginner { background: #dcfce7; color: #15803d; }
+  .badge-intermediate { background: #fef9c3; color: #854d0e; }
+  .badge-advanced { background: #fee2e2; color: #b91c1c; }
+
+  .post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .post-header h1 { margin-bottom: 0.75rem; }
+
+  .post-desc {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .guide-meta-row {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .post-body { line-height: 1.8; }
+</style>

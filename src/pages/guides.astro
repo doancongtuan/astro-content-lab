@@ -6,14 +6,95 @@ const guides = await getCollection('guides')
 ---
 
 <BaseLayout title="Guides — Astro Content Lab">
-  <h1>Guides</h1>
-  <ul>
+  <div class="page-header">
+    <h1>Guides</h1>
+    <p>Step-by-step guides for building with Astro.</p>
+  </div>
+  <div class="post-list">
     {guides.map((guide) => (
-      <li>
-        <a href={`/guides/${guide.id}`}>{guide.data.title}</a>
-        <p>{guide.data.description}</p>
-        <p>Difficulty: {guide.data.difficulty} · {guide.data.estimatedTime}</p>
-      </li>
+      <a href={`/guides/${guide.id}`} class="post-item">
+        <div class="post-item-content">
+          <span class={`badge badge-${guide.data.difficulty}`}>{guide.data.difficulty}</span>
+          <h2>{guide.data.title}</h2>
+          <p>{guide.data.description}</p>
+          <p class="meta">⏱ {guide.data.estimatedTime}</p>
+        </div>
+        <span class="post-item-link">Read guide →</span>
+      </a>
     ))}
-  </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .page-header h1 { margin-bottom: 0.5rem; }
+  .page-header p { color: var(--color-text-muted); margin: 0; }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .post-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--color-text);
+    background: var(--color-bg);
+    transition: all 0.2s;
+    gap: 1rem;
+  }
+
+  .post-item:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .post-item-content h2 {
+    font-size: 1.0625rem;
+    margin: 0.35rem 0;
+  }
+
+  .post-item-content p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .post-item-link {
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+
+  .badge-beginner { background: #dcfce7; color: #15803d; }
+  .badge-intermediate { background: #fef9c3; color: #854d0e; }
+  .badge-advanced { background: #fee2e2; color: #b91c1c; }
+
+  .meta { margin-top: 0.35rem !important; }
+
+  @media (max-width: 640px) {
+    .post-item { flex-direction: column; align-items: flex-start; }
+  }
+</style>

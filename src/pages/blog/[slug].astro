@@ -12,10 +12,69 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props
 const { Content } = await render(post)
+
+const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+})
 ---
 
-<BaseLayout title={post.data.title}>
-  <h1>{post.data.title}</h1>
-  <p>{post.data.description}</p>
-  <Content />
+<BaseLayout title={`${post.data.title} — Astro Content Lab`}>
+  <article class="post">
+    <div class="post-header">
+      <a href="/blog" class="back-link">← Back to Blog</a>
+      <h1>{post.data.title}</h1>
+      <p class="post-desc">{post.data.description}</p>
+      <p class="post-meta">Published {publishedDate}</p>
+    </div>
+    <div class="post-body">
+      <Content />
+    </div>
+  </article>
 </BaseLayout>
+
+<style>
+  .post {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .back-link:hover {
+    color: var(--color-primary);
+  }
+
+  .post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .post-header h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .post-desc {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .post-meta {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .post-body {
+    line-height: 1.8;
+  }
+</style>
