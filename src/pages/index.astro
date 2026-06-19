@@ -10,237 +10,79 @@ const latestReviews = reviews.slice(0, 2)
 ---
 
 <BaseLayout title="Astro Content Lab — Learn Astro from Scratch">
-  
+
   <!-- Hero -->
-  <section class="hero">
-    <h1>Learn Astro by Building a Real Content Site</h1>
-    <p class="hero-desc">A hands-on series for WordPress users and beginners who want to understand modern web development — from static site to mini CMS.</p>
-    <div class="hero-actions">
-      <a href="/blog" class="btn btn-primary">Read the Blog</a>
-      <a href="https://github.com/doancongtuan/astro-content-lab" class="btn btn-outline" target="_blank">View on GitHub</a>
+  <section class="py-16 text-center border-b border-slate-200 mb-12">
+    <h1 class="text-4xl font-bold text-slate-900 max-w-2xl mx-auto mb-4 leading-tight">
+      Learn Astro by Building a Real Content Site
+    </h1>
+    <p class="text-lg text-slate-500 max-w-xl mx-auto mb-8">
+      A hands-on series for WordPress users and beginners who want to understand modern web development — from static site to mini CMS.
+    </p>
+    <div class="flex gap-3 justify-center flex-wrap">
+      <a href="/blog" class="inline-block px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors no-underline">
+        Read the Blog
+      </a>
+      <a href="https://github.com/doancongtuan/astro-content-lab" target="_blank" class="inline-block px-5 py-2.5 border border-slate-200 text-slate-900 font-semibold rounded-lg hover:border-indigo-500 hover:text-indigo-600 transition-colors no-underline">
+        View on GitHub
+      </a>
     </div>
   </section>
 
   <!-- Latest Posts -->
-  <section class="section">
-    <div class="section-header">
-      <h2>Latest Posts</h2>
-      <a href="/blog" class="see-all">See all →</a>
+  <section class="mb-14">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-slate-900">Latest Posts</h2>
+      <a href="/blog" class="text-sm text-indigo-600 font-medium hover:underline">See all →</a>
     </div>
-    <div class="card-grid">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {latestPosts.map((post) => (
-        <a href={`/blog/${post.id}`} class="card">
-          <div class="card-body">
-            <h3>{post.data.title}</h3>
-            <p>{post.data.description}</p>
+        <a href={`/blog/${post.id}`} class="flex flex-col justify-between border border-slate-200 rounded-xl p-5 no-underline text-slate-900 hover:border-indigo-500 hover:shadow-md transition-all group">
+          <div>
+            <h3 class="text-base font-semibold mb-2 group-hover:text-indigo-600 transition-colors">{post.data.title}</h3>
+            <p class="text-sm text-slate-500 m-0">{post.data.description}</p>
           </div>
-          <span class="card-link">Read more →</span>
+          <span class="text-sm text-indigo-600 font-medium mt-4 block">Read more →</span>
         </a>
       ))}
     </div>
   </section>
 
   <!-- Latest Reviews -->
-  <section class="section">
-    <div class="section-header">
-      <h2>Latest Reviews</h2>
-      <a href="/reviews" class="see-all">See all →</a>
+  <section class="mb-14">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-slate-900">Latest Reviews</h2>
+      <a href="/reviews" class="text-sm text-indigo-600 font-medium hover:underline">See all →</a>
     </div>
-    <div class="card-grid">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {latestReviews.map((review) => (
-        <a href={`/reviews/${review.id}`} class="card">
-          <div class="card-body">
-            <span class="badge">Review</span>
-            <h3>{review.data.title}</h3>
-            <p>{review.data.description}</p>
-            <p class="rating">{'★'.repeat(Math.floor(review.data.rating))}{'☆'.repeat(5 - Math.floor(review.data.rating))} {review.data.rating}/5</p>
+        <a href={`/reviews/${review.id}`} class="flex flex-col justify-between border border-slate-200 rounded-xl p-5 no-underline text-slate-900 hover:border-indigo-500 hover:shadow-md transition-all group">
+          <div>
+            <span class="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-violet-100 text-violet-700 mb-2">Review</span>
+            <h3 class="text-base font-semibold mb-2 group-hover:text-indigo-600 transition-colors">{review.data.title}</h3>
+            <p class="text-sm text-slate-500 m-0">{review.data.description}</p>
+            <p class="text-amber-500 text-sm mt-2 m-0">
+              {'★'.repeat(Math.floor(review.data.rating))}{'☆'.repeat(5 - Math.floor(review.data.rating))} {review.data.rating}/5
+            </p>
           </div>
-          <span class="card-link">Read review →</span>
+          <span class="text-sm text-indigo-600 font-medium mt-4 block">Read review →</span>
         </a>
       ))}
     </div>
   </section>
 
-  <!-- What is this site -->
-  <section class="section about-section">
-    <h2>What is Astro Content Lab?</h2>
-    <p>This is the demo project for the series <strong>"Learn Astro from Scratch"</strong> — a practical guide for WordPress users who want to understand how modern static sites work.</p>
-    <p>Every page on this site was built step by step, documented in the series. The source code is public on GitHub.</p>
-    <a href="/about" class="btn btn-outline">About this project →</a>
+  <!-- About section -->
+  <section class="bg-slate-50 border border-slate-200 rounded-xl p-8 mb-4">
+    <h2 class="text-2xl font-bold text-slate-900 mt-0 mb-3">What is Astro Content Lab?</h2>
+    <p class="text-slate-600 mb-3">
+      This is the demo project for the series <strong>"Learn Astro from Scratch"</strong> — a practical guide for WordPress users who want to understand how modern static sites work.
+    </p>
+    <p class="text-slate-600 mb-4">
+      Every page on this site was built step by step, documented in the series. The source code is public on GitHub.
+    </p>
+    <a href="/about" class="inline-block px-5 py-2.5 border border-slate-200 text-slate-900 font-semibold rounded-lg hover:border-indigo-500 hover:text-indigo-600 transition-colors no-underline">
+      About this project →
+    </a>
   </section>
 
 </BaseLayout>
-
-<style>
-  /* Hero */
-  .hero {
-    padding: 4rem 0 3rem;
-    text-align: center;
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: 3rem;
-  }
-
-  .hero h1 {
-    font-size: 2.25rem;
-    max-width: 600px;
-    margin: 0 auto 1rem;
-  }
-
-  .hero-desc {
-    color: var(--color-text-muted);
-    font-size: 1.125rem;
-    max-width: 520px;
-    margin: 0 auto 2rem;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* Buttons */
-  .btn {
-    display: inline-block;
-    padding: 0.625rem 1.375rem;
-    border-radius: var(--radius);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-
-  .btn-primary {
-    background: var(--color-primary);
-    color: #fff;
-  }
-
-  .btn-primary:hover {
-    background: var(--color-primary-dark);
-    text-decoration: none;
-    color: #fff;
-  }
-
-  .btn-outline {
-    border: 1.5px solid var(--color-border);
-    color: var(--color-text);
-  }
-
-  .btn-outline:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  /* Sections */
-  .section {
-    margin-bottom: 3.5rem;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  }
-
-  .section-header h2 {
-    margin: 0;
-  }
-
-  .see-all {
-    font-size: 0.9rem;
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .see-all:hover {
-    text-decoration: underline;
-  }
-
-  /* Cards */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    text-decoration: none;
-    color: var(--color-text);
-    background: var(--color-bg);
-    transition: all 0.2s;
-  }
-
-  .card:hover {
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-md);
-    text-decoration: none;
-    color: var(--color-text);
-    transform: translateY(-2px);
-  }
-
-  .card-body h3 {
-    font-size: 1rem;
-    margin: 0.5rem 0 0.5rem;
-  }
-
-  .card-body p {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    margin: 0;
-  }
-
-  .card-link {
-    font-size: 0.875rem;
-    color: var(--color-primary);
-    font-weight: 500;
-    margin-top: 1rem;
-    display: block;
-  }
-
-  /* Badge */
-  .badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    background: #ede9fe;
-    color: #7c3aed;
-  }
-
-  /* Rating */
-  .rating {
-    color: var(--color-warning);
-    font-size: 0.875rem;
-    margin-top: 0.5rem !important;
-  }
-
-  /* About section */
-  .about-section {
-    background: var(--color-bg-soft);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: 2rem;
-  }
-
-  .about-section h2 {
-    margin-top: 0;
-  }
-
-  /* Responsive */
-  @media (max-width: 640px) {
-    .hero {
-      padding: 2.5rem 0 2rem;
-    }
-
-    .hero h1 {

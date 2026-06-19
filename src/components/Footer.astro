@@ -2,60 +2,17 @@
 const year = new Date().getFullYear()
 ---
 
-<footer class="site-footer">
-  <div class="container-wide footer-inner">
-    <p class="footer-copy">© {year} Astro Content Lab. Built with Astro.</p>
-    <nav class="footer-nav">
-      <a href="/blog">Blog</a>
-      <a href="/reviews">Reviews</a>
-      <a href="/compares">Compares</a>
-      <a href="/guides">Guides</a>
-      <a href="/about">About</a>
+<footer class="border-t border-slate-200 bg-slate-50 py-8 mt-16">
+  <div class="max-w-6xl mx-auto px-5 flex items-center justify-between flex-wrap gap-4">
+    <p class="text-slate-500 text-sm m-0">
+      © {year} <a href="https://github.com/doancongtuan/astro-content-lab" target="_blank" class="text-slate-500 hover:text-indigo-600 transition-colors">Astro Content Lab</a>. Built with Astro by <a href="https://doancongtuan.com" target="_blank" class="text-slate-500 hover:text-indigo-600 transition-colors">Steven Doan</a>.
+    </p>
+    <nav class="flex gap-5">
+      <a href="/blog" class="text-slate-500 text-sm hover:text-indigo-600 no-underline transition-colors">Blog</a>
+      <a href="/reviews" class="text-slate-500 text-sm hover:text-indigo-600 no-underline transition-colors">Reviews</a>
+      <a href="/compares" class="text-slate-500 text-sm hover:text-indigo-600 no-underline transition-colors">Compares</a>
+      <a href="/guides" class="text-slate-500 text-sm hover:text-indigo-600 no-underline transition-colors">Guides</a>
+      <a href="/about" class="text-slate-500 text-sm hover:text-indigo-600 no-underline transition-colors">About</a>
     </nav>
   </div>
 </footer>
-
-<style>
-  .site-footer {
-    border-top: 1px solid var(--color-border);
-    background: var(--color-bg-soft);
-    padding: 2rem 0;
-    margin-top: 4rem;
-  }
-
-  .footer-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-copy {
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-    margin: 0;
-  }
-
-  .footer-nav {
-    display: flex;
-    gap: 1.25rem;
-  }
-
-  .footer-nav a {
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-    text-decoration: none;
-  }
-
-  .footer-nav a:hover {
-    color: var(--color-primary);
-  }
-
-  @media (max-width: 640px) {
-    .footer-inner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-</style>
