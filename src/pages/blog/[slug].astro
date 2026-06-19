@@ -22,7 +22,14 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
 })
 ---
 
-<BaseLayout title={`${post.data.title} — Astro Content Lab`} narrow>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogImage={post.data.heroImage?.src ?? post.data.heroImageCloudinary}
+  ogType="article"
+  narrow
+>
+
   <article>
 
     <div class="mb-8 pb-6 border-b border-slate-200">

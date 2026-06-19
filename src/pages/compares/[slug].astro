@@ -20,7 +20,13 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
 })
 ---
 
-<BaseLayout title={`${compare.data.title} — Astro Content Lab`} narrow>
+<BaseLayout
+  title={compare.data.title}
+  description={compare.data.description}
+  ogImage={compare.data.heroImage?.src}
+  ogType="article"
+  narrow
+>
   <article>
 
     <div class="mb-8 pb-6 border-b border-slate-200">

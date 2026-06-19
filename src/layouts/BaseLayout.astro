@@ -1,21 +1,44 @@
 ---
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
+import SEO from '../components/SEO.astro'
+import { SITE_NAME, SITE_DESCRIPTION } from '../config'
 import '../styles/global.css'
 
 interface Props {
   title: string
+  description?: string
+  canonicalURL?: string
+  ogImage?: string
+  ogType?: 'website' | 'article'
+  noindex?: boolean
   narrow?: boolean
 }
 
-const { title, narrow = false } = Astro.props
+const {
+  title,
+  description = 'Astro Content Lab — a real content site built with Astro, MDX and Tailwind CSS.',
+  canonicalURL,
+  ogImage,
+  ogType = 'website',
+  noindex = false,
+  narrow = false,
+} = Astro.props
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
+    <title>{title} — {SITE_NAME}</title>
+    <SEO
+      title={`${title} — ${SITE_NAME}`}
+      description={description}
+      canonicalURL={canonicalURL}
+      ogImage={ogImage}
+      ogType={ogType}
+      noindex={noindex}
+    />
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />

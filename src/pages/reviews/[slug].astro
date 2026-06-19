@@ -23,7 +23,13 @@ const stars = '★'.repeat(Math.floor(review.data.rating)) +
               '☆'.repeat(5 - Math.floor(review.data.rating))
 ---
 
-<BaseLayout title={`${review.data.title} — Astro Content Lab`} narrow>
+<BaseLayout
+  title={review.data.title}
+  description={review.data.description}
+  ogImage={review.data.heroImage?.src}
+  ogType="article"
+  narrow
+>
   <article>
 
     <div class="mb-8 pb-6 border-b border-slate-200">
