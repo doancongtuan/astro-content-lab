@@ -5,9 +5,10 @@ import '../styles/global.css'
 
 interface Props {
   title: string
+  narrow?: boolean
 }
 
-const { title } = Astro.props
+const { title, narrow = false } = Astro.props
 ---
 
 <html lang="en">
@@ -19,7 +20,7 @@ const { title } = Astro.props
   <body class="min-h-screen flex flex-col">
     <Header />
     <main class="flex-1 py-10">
-      <div class="max-w-5xl mx-auto px-5">
+      <div class={`${narrow ? 'max-w-4xl' : 'max-w-5xl'} mx-auto px-5`}>
         <slot />
       </div>
     </main>

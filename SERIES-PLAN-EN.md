@@ -389,6 +389,33 @@ heroImage: https://res.cloudinary.com/your-cloud/image/upload/v1/posts/hero.jpg
 
 **Outcome:** Entire site uses Tailwind, ready to build better-looking components.
 
+## Tách bài 16 thành 2 phần:
+
+### Bài 16A — Why Tailwind and How to Install
+
+Tại sao switch từ CSS thuần sang Tailwind
+Tailwind v4 khác v3 thế nào
+Cài đặt vào Astro
+Setup global.css với @theme
+Refactor BaseLayout, Header, Footer
+
+#### Bài 16A xong. ~2500 words.
+
+* Điểm đặc biệt:
+
+- Mở đầu bằng vấn đề thật — 200-line global.css, style scattered 12 files
+- MyExperienceBox về "Read more link lơ lửng" — đúng câu chuyện hôm nay
+- Giải thích Tailwind v4 vs v3 rõ ràng — người đọc không bị nhầm với tutorial cũ
+- Section "What's still plain CSS" — honest về .prose limitation
+- Full code cho tất cả files đã refactor
+
+### Bài 16B — Refactor All Pages to Tailwind
+
+Refactor tất cả listing pages
+Refactor tất cả detail pages
+Refactor components
+Kết quả trước/sau
+
 ---
 
 ### Article 17 — SEO in Astro

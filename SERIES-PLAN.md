@@ -32,9 +32,11 @@
 - [x] Bài 11: Build a review page with Content Collections
 - [x] Bài 12: Build a comparison page
 - [x] Bài 13: Build a guide page
-- [ ] Bài 14: Images in Astro — local images
-- [ ] Bài 15: Images in Astro — Cloudinary
-- [ ] Bài 16: Switch to Tailwind CSS
+- [x] Bài 14: Images in Astro — local images
+- [x] Bài 15: Images in Astro — Cloudinary
+- [ ] Bài 16: Switch to Tailwind CSS (tách thành 2 phần)
+    - Bài 16A: Why Tailwind + Install + BaseLayout/Header/Footer/index/blog ✅ code xong
+    - Bài 16B: Refactor tất cả pages còn lại ⬜ làm phiên sau
 - [ ] Bài 17: SEO in Astro
 - [ ] Bài 18: Sitemap and robots.txt
 - [ ] Bài 19: Build a component library

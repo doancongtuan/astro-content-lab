@@ -5,33 +5,15 @@ interface Props {
 }
 
 const { type = 'info', title } = Astro.props
+
+const styles = {
+  info:    'border-blue-400 bg-blue-50 text-blue-900',
+  warning: 'border-amber-400 bg-amber-50 text-amber-900',
+  tip:     'border-emerald-400 bg-emerald-50 text-emerald-900',
+}
 ---
 
-<div class={`callout callout-${type}`}>
-  {title && <p class="callout-title">{title}</p>}
+<div class={`border-l-4 px-4 py-3 rounded-r-lg my-4 ${styles[type]}`}>
+  {title && <p class="font-bold text-sm mb-1">{title}</p>}
   <slot />
 </div>
-
-<style>
-  .callout {
-    padding: 1rem;
-    border-left: 4px solid;
-    margin: 1rem 0;
-  }
-  .callout-info {
-    border-color: #3b82f6;
-    background: #eff6ff;
-  }
-  .callout-warning {
-    border-color: #f59e0b;
-    background: #fffbeb;
-  }
-  .callout-tip {
-    border-color: #10b981;
-    background: #ecfdf5;
-  }
-  .callout-title {
-    font-weight: bold;
-    margin: 0 0 0.5rem 0;
-  }
-</style>

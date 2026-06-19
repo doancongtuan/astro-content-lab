@@ -18,98 +18,47 @@ const { Content } = await render(guide)
 const publishedDate = new Date(guide.data.publishedAt).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 })
+
+const difficultyColors: Record<string, string> = {
+  beginner: 'bg-emerald-100 text-emerald-700',
+  intermediate: 'bg-amber-100 text-amber-700',
+  advanced: 'bg-red-100 text-red-700',
+}
 ---
 
-<BaseLayout title={`${guide.data.title} — Astro Content Lab`}>
-  <article class="post">
+<BaseLayout title={`${guide.data.title} — Astro Content Lab`} narrow>
+  <article>
 
-    <div class="post-header">
-      <a href="/guides" class="back-link">← Back to Guides</a>
-      <span class={`badge badge-${guide.data.difficulty}`}>
+    <div class="mb-8 pb-6 border-b border-slate-200">
+      <a href="/guides" class="text-sm text-indigo-600 hover:underline">← Back to Guides</a>
+      <span class={`inline-block mt-3 text-xs font-semibold px-2.5 py-0.5 rounded-full capitalize mb-1 ${difficultyColors[guide.data.difficulty] ?? 'bg-slate-100 text-slate-600'}`}>
         {guide.data.difficulty}
       </span>
-      <h1>{guide.data.title}</h1>
-      <p class="post-desc">{guide.data.description}</p>
-      <div class="guide-meta">
+      <h1 class="text-3xl font-bold text-slate-900 mt-2 mb-2">{guide.data.title}</h1>
+      <p class="text-slate-500 mb-2">{guide.data.description}</p>
+      <div class="flex gap-2 items-center text-sm text-slate-400">
         <span>⏱ {guide.data.estimatedTime}</span>
-        <span class="separator">·</span>
+        <span>·</span>
         <span>Published {publishedDate}</span>
       </div>
     </div>
 
     {guide.data.heroImage && (
-      <div class="hero-image">
+      <div class="mb-8 rounded-xl overflow-hidden">
         <Image
           src={guide.data.heroImage}
           alt={guide.data.heroImageAlt || guide.data.title}
           width={1200}
           height={630}
+          class="w-full h-auto"
         />
       </div>
     )}
 
-    <div class="post-body">
+    <div class="post-body prose">
       <Content />
     </div>
 
   </article>
   <ProjectBanner />
 </BaseLayout>
-
-<style>
-  .post { max-width: 680px; margin: 0 auto; }
-
-  .back-link {
-    display: inline-block;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    text-decoration: none;
-    margin-bottom: 1rem;
-  }
-
-  .back-link:hover { color: var(--color-primary); }
-
-  .badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    text-transform: capitalize;
-    margin-bottom: 0.75rem;
-  }
-
-  .badge-beginner    { background: #dcfce7; color: #15803d; }
-  .badge-intermediate { background: #fef9c3; color: #854d0e; }
-  .badge-advanced    { background: #fee2e2; color: #b91c1c; }
-
-  .post-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .post-header h1 { margin-bottom: 0.75rem; }
-  .post-desc { font-size: 1.125rem; color: var(--color-text-muted); margin-bottom: 0.75rem; }
-
-  .guide-meta {
-    display: flex;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    align-items: center;
-  }
-
-  .separator { opacity: 0.4; }
-
-  .hero-image {
-    margin-bottom: 2rem;
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .hero-image img { width: 100%; height: auto; display: block; }
-
-  .post-body { line-height: 1.8; }
-
-</style>

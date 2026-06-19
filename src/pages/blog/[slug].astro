@@ -22,91 +22,43 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
 })
 ---
 
-<BaseLayout title={`${post.data.title} — Astro Content Lab`}>
-  <article class="post">
-    <div class="post-header">
-      <a href="/blog" class="back-link">← Back to Blog</a>
-      <h1>{post.data.title}</h1>
-      <p class="post-desc">{post.data.description}</p>
-      <p class="post-meta">Published {publishedDate}</p>
+<BaseLayout title={`${post.data.title} — Astro Content Lab`} narrow>
+  <article>
+
+    <div class="mb-8 pb-6 border-b border-slate-200">
+      <a href="/blog" class="text-sm text-indigo-600 hover:underline">← Back to Blog</a>
+      <h1 class="text-3xl font-bold text-slate-900 mt-4 mb-2">{post.data.title}</h1>
+      <p class="text-slate-500 mb-2">{post.data.description}</p>
+      <p class="text-sm text-slate-400">Published {publishedDate}</p>
     </div>
 
     {post.data.heroImage ? (
-      <div class="hero-image">
+      <div class="mb-8 rounded-xl overflow-hidden">
         <Image
-        src={post.data.heroImage}
-        alt={post.data.heroImageAlt || post.data.title}
-        width={1200}
-        height={630}
-      />
-      </div>
-    ) : post.data.heroImageCloudinary ? (
-      <div class="hero-image">
-        <img
-        src={post.data.heroImageCloudinary}
-        alt={post.data.heroImageAlt || post.data.title}
-        width={1200}
-        height={630}
-        loading="lazy"
+          src={post.data.heroImage}
+          alt={post.data.heroImageAlt || post.data.title}
+          width={1200}
+          height={630}
+          class="w-full h-auto"
         />
       </div>
-) : null}
+    ) : post.data.heroImageCloudinary ? (
+      <div class="mb-8 rounded-xl overflow-hidden">
+        <img
+          src={post.data.heroImageCloudinary}
+          alt={post.data.heroImageAlt || post.data.title}
+          width={1200}
+          height={630}
+          loading="lazy"
+          class="w-full h-auto"
+        />
+      </div>
+    ) : null}
 
-    <div class="post-body">
+    <div class="post-body prose">
       <Content />
     </div>
+
   </article>
   <ProjectBanner />
-
 </BaseLayout>
-
-<style>
-  .post {
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .back-link {
-    display: inline-block;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    text-decoration: none;
-    margin-bottom: 1.5rem;
-  }
-
-  .back-link:hover { color: var(--color-primary); }
-
-  .post-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .post-header h1 { margin-bottom: 0.75rem; }
-
-  .post-desc {
-    font-size: 1.125rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .post-meta {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    margin: 0;
-  }
-
-  .hero-image {
-    margin-bottom: 2rem;
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .hero-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .post-body { line-height: 1.8; }
-</style>

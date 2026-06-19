@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../**/*.astro";
 
 @theme {
   --color-primary: #4f46e5;
@@ -79,6 +80,7 @@ body {
   font-style: italic;
 }
 .prose img {
+  width: 100%;
   max-width: 100%;
   height: auto;
   border-radius: 8px;
