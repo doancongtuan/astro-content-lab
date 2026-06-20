@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
 import FAQSection from '../../components/content/FAQSection.astro'
+import AnswerBox from '../../components/content/AnswerBox.astro'
 
 export async function getStaticPaths() {
   const reviews = await getCollection('reviews')
@@ -59,6 +60,13 @@ const stars = '★'.repeat(Math.floor(review.data.rating)) +
       <p class="text-amber-500 text-lg mb-1">{stars} <span class="text-slate-600 text-sm">{review.data.rating}/5</span></p>
       <p class="text-sm text-slate-400">Published {publishedDate}</p>
     </div>
+
+    {review.data.answerBox && (
+      <AnswerBox
+        question={review.data.answerBox.question}
+        shortAnswer={review.data.answerBox.shortAnswer}
+      />
+    )}
 
     {review.data.heroImage && (
       <div class="mb-8 rounded-xl overflow-hidden">

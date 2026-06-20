@@ -5,6 +5,8 @@ import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
+import FAQSection from '../../components/content/FAQSection.astro'
+import AnswerBox from '../../components/content/AnswerBox.astro'
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides')
@@ -65,6 +67,13 @@ const difficultyColors: Record<string, string> = {
       </div>
     </div>
 
+    {guide.data.answerBox && (
+      <AnswerBox
+        question={guide.data.answerBox.question}
+        shortAnswer={guide.data.answerBox.shortAnswer}
+      />
+    )}
+
     {guide.data.heroImage && (
       <div class="mb-8 rounded-xl overflow-hidden">
         <Image
@@ -81,6 +90,8 @@ const difficultyColors: Record<string, string> = {
       <Content />
     </div>
 
+    {guide.data.faq && <FAQSection items={guide.data.faq} />}
+    
   </article>
   <ProjectBanner />
 </BaseLayout>

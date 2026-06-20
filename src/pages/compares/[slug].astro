@@ -5,6 +5,8 @@ import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
+import FAQSection from '../../components/content/FAQSection.astro'
+import AnswerBox from '../../components/content/AnswerBox.astro'
 
 export async function getStaticPaths() {
   const compares = await getCollection('compares')
@@ -54,6 +56,13 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
       <p class="text-sm text-slate-400">Published {publishedDate}</p>
     </div>
 
+    {compare.data.answerBox && (
+      <AnswerBox
+        question={compare.data.answerBox.question}
+        shortAnswer={compare.data.answerBox.shortAnswer}
+      />
+    )}
+
     {compare.data.heroImage && (
       <div class="mb-8 rounded-xl overflow-hidden">
         <Image
@@ -90,6 +99,8 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
       <Content />
     </div>
 
+    {compare.data.faq && <FAQSection items={compare.data.faq} />}
+    
   </article>
   <ProjectBanner />
 </BaseLayout>

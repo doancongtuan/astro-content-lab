@@ -5,6 +5,8 @@ import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
+import FAQSection from '../../components/content/FAQSection.astro'
+import AnswerBox from '../../components/content/AnswerBox.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
@@ -55,6 +57,13 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
       <p class="text-sm text-slate-400">Published {publishedDate}</p>
     </div>
 
+    {post.data.answerBox && (
+      <AnswerBox
+        question={post.data.answerBox.question}
+        shortAnswer={post.data.answerBox.shortAnswer}
+      />
+    )}
+
     {post.data.heroImage ? (
       <div class="mb-8 rounded-xl overflow-hidden">
         <Image
@@ -81,7 +90,9 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
     <div class="post-body prose">
       <Content />
     </div>
-
+    
+    {post.data.faq && <FAQSection items={post.data.faq} />}
+  
   </article>
   <ProjectBanner />
 </BaseLayout>
