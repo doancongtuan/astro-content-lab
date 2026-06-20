@@ -1,8 +1,10 @@
 ---
+import { SITE_URL } from '../../config'
 import { getCollection, render } from 'astro:content'
 import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ProjectBanner from '../../components/ProjectBanner.astro'
+import SchemaOrg from '../../components/SchemaOrg.astro'
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides')
@@ -33,6 +35,20 @@ const difficultyColors: Record<string, string> = {
   ogType="article"
   narrow
 >
+<SchemaOrg
+  type="Article"
+  title={guide.data.title}
+  description={guide.data.description}
+  publishedAt={guide.data.publishedAt}
+/>
+<SchemaOrg
+  type="BreadcrumbList"
+  items={[
+    { name: 'Home', url: SITE_URL },
+    { name: 'Guides', url: `${SITE_URL}/guides` },
+    { name: guide.data.title, url: Astro.url.href },
+  ]}
+/>
   <article>
 
     <div class="mb-8 pb-6 border-b border-slate-200">

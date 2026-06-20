@@ -1,0 +1,117 @@
+---
+import { SITE_NAME, SITE_URL, AUTHOR_NAME, AUTHOR_URL } from '../config'
+
+interface ArticleSchema {
+  type: 'Article'
+  title: string
+  description: string
+  publishedAt: Date
+  updatedAt?: Date
+  image?: string
+  authorName?: string
+}
+
+interface ReviewSchema {
+  type: 'Review'
+  title: string
+  description: string
+  publishedAt: Date
+  itemReviewed: string
+  rating: number
+  bestRating?: number
+  authorName?: string
+}
+
+interface BreadcrumbItem {
+  name: string
+  url: string
+}
+
+interface BreadcrumbSchema {
+  type: 'BreadcrumbList'
+  items: BreadcrumbItem[]
+}
+
+interface OrganizationSchema {
+  type: 'Organization'
+  name?: string
+  url?: string
+  logo?: string
+}
+
+interface PersonSchema {
+  type: 'Person'
+  name?: string
+  url?: string
+  bio?: string
+  image?: string
+}
+
+type Props = ArticleSchema | ReviewSchema | BreadcrumbSchema | OrganizationSchema | PersonSchema
+
+const props = Astro.props
+const pageUrl = Astro.url.href
+const authorName = ('authorName' in props && props.authorName) || AUTHOR_NAME
+
+let schema: Record<string, any> = {}
+
+if (props.type === 'Article') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: props.title,
+    description: props.description,
+    datePublished: props.publishedAt.toISOString(),
+    dateModified: (props.updatedAt ?? props.publishedAt).toISOString(),
+    author: { '@type': 'Person', name: authorName, url: AUTHOR_URL },
+    publisher: { '@type': 'Organization', name: SITE_NAME },
+    url: pageUrl,
+    ...(props.image && { image: props.image }),
+  }
+} else if (props.type === 'Review') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Review',
+    itemReviewed: { '@type': 'Product', name: props.itemReviewed },
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: props.rating,
+      bestRating: props.bestRating ?? 5,
+    },
+    author: { '@type': 'Person', name: authorName, url: AUTHOR_URL },
+    datePublished: props.publishedAt.toISOString(),
+    reviewBody: props.description,
+    url: pageUrl,
+  }
+} else if (props.type === 'BreadcrumbList') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: props.items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+} else if (props.type === 'Organization') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: props.name ?? SITE_NAME,
+    url: props.url ?? SITE_URL,
+    ...(props.logo && { logo: props.logo }),
+  }
+} else if (props.type === 'Person') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: props.name ?? AUTHOR_NAME,
+    url: props.url ?? AUTHOR_URL,
+    ...(props.bio && { description: props.bio }),
+    ...(props.image && { image: props.image }),
+  }
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
