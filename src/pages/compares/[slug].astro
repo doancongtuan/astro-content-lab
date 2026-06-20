@@ -41,8 +41,8 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
 <SchemaOrg
   type="BreadcrumbList"
   items={[
-    { name: 'Home', url: SITE_URL },
-    { name: 'Compares', url: `${SITE_URL}/compares` },
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Compares', url: `${SITE_URL}/compares/` },
     { name: compare.data.title, url: Astro.url.href },
   ]}
 />
@@ -100,7 +100,7 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
     </div>
 
     {compare.data.faq && <FAQSection items={compare.data.faq} />}
-    
+
   </article>
   <ProjectBanner />
 </BaseLayout>

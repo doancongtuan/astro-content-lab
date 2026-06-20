@@ -46,8 +46,8 @@ const difficultyColors: Record<string, string> = {
 <SchemaOrg
   type="BreadcrumbList"
   items={[
-    { name: 'Home', url: SITE_URL },
-    { name: 'Guides', url: `${SITE_URL}/guides` },
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Guides', url: `${SITE_URL}/guides/` },
     { name: guide.data.title, url: Astro.url.href },
   ]}
 />
@@ -91,7 +91,7 @@ const difficultyColors: Record<string, string> = {
     </div>
 
     {guide.data.faq && <FAQSection items={guide.data.faq} />}
-    
+
   </article>
   <ProjectBanner />
 </BaseLayout>

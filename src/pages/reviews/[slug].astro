@@ -45,8 +45,8 @@ const stars = '★'.repeat(Math.floor(review.data.rating)) +
 <SchemaOrg
   type="BreadcrumbList"
   items={[
-    { name: 'Home', url: SITE_URL },
-    { name: 'Reviews', url: `${SITE_URL}/reviews` },
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Reviews', url: `${SITE_URL}/reviews/` },
     { name: review.data.title, url: Astro.url.href },
   ]}
 />

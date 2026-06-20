@@ -42,8 +42,8 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
 <SchemaOrg
   type="BreadcrumbList"
   items={[
-    { name: 'Home', url: SITE_URL },
-    { name: 'Blog', url: `${SITE_URL}/blog` },
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Blog', url: `${SITE_URL}/blog/` },
     { name: post.data.title, url: Astro.url.href },
   ]}
 />
