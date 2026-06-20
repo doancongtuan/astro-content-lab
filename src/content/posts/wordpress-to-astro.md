@@ -4,6 +4,16 @@ description: After 10 years of building WordPress sites, here is what finally pu
 publishedAt: 2026-06-17T00:00:00Z
 heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-3.jpg
 heroImageAlt: Moved From WordPress to Astro
+
+answerBox:
+  question: "Why would a WordPress developer switch to Astro?"
+  shortAnswer: "Astro removes the plugin dependency, database overhead, and constant core-update maintenance that comes with WordPress — at the cost of giving up the built-in admin dashboard non-technical clients rely on."
+
+faq:
+  - question: "Is Astro harder to learn than WordPress?"
+    answer: "For a developer, no — Astro uses standard HTML, CSS, and JavaScript with a simpler mental model than WordPress's theme/plugin architecture. For a non-technical content editor, WordPress is still easier since there's no code involved."
+  - question: "Can Astro replace WordPress for client projects?"
+    answer: "Only if the client doesn't need to self-edit content without a developer, or if a headless CMS is added on top. For agencies handing off sites to non-technical clients, WordPress remains the more practical choice."
 ---
 
 

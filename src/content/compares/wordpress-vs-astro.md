@@ -8,6 +8,17 @@ verdict: WordPress wins when clients need to edit content. Astro wins when a dev
 publishedAt: 2026-06-17T00:00:00Z
 heroImage: ../../assets/images/compares/wordpress-vs-astro.jpg
 heroImageAlt: WordPress vs Astro comparison
+
+answerBox:
+  question: "Should I choose WordPress or Astro for a new content site?"
+  shortAnswer: "Choose WordPress if you or your client need to edit content without a developer. Choose Astro if you're a developer who values performance and is comfortable maintaining content through code and Markdown instead of a dashboard."
+
+faq:
+  - question: "Is Astro faster than WordPress?"
+    answer: "Generally yes for static, content-first sites — Astro ships pre-built HTML with minimal JavaScript, while WordPress generates pages dynamically on each request unless heavily cached."
+  - question: "Can a non-technical person manage an Astro site?"
+    answer: "Not without an additional CMS layer like TinaCMS or a headless CMS. Out of the box, Astro content is edited through Markdown files and Git, which assumes developer comfort."
+    
 ---
 
 ## WordPress vs Astro

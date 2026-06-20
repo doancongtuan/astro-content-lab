@@ -17,6 +17,18 @@ cons:
   - SSR on free tier has function execution limits
 verdict: The easiest way to deploy an Astro static site. Hard to beat for personal projects and small content sites.
 publishedAt: 2026-06-17T00:00:00Z
+
+answerBox:
+  question: "Is Vercel good for deploying an Astro site?"
+  shortAnswer: "Yes — Vercel is one of the easiest ways to deploy Astro. Connect a GitHub repo, get automatic builds on every push, and a live URL on the free tier. It's not built for high-bandwidth media-heavy sites without watching usage limits."
+
+faq:
+  - question: "Is Vercel free for personal Astro projects?"
+    answer: "Yes, the Hobby tier is free and covers most personal and small content sites — generous bandwidth, automatic HTTPS, and unlimited deployments."
+  - question: "Does Vercel support Astro out of the box?"
+    answer: "Yes. Vercel auto-detects Astro projects and configures the build settings automatically — no manual config needed for a standard static build."
+  - question: "When should I upgrade from Vercel's free tier?"
+    answer: "When bandwidth or build minutes exceed Hobby tier limits, typically once a site gets meaningful traffic or the team needs more than one collaborator on the project."
 ---
 
 ## Vercel Review

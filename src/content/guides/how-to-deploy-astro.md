@@ -6,6 +6,17 @@ estimatedTime: 15 minutes
 publishedAt: 2026-06-17T00:00:00Z
 heroImage: ../../assets/images/guides/how-to-deploy-astro.jpg
 heroImageAlt: Vercel import repository screen
+
+answerBox:
+  question: "What's the fastest way to deploy an Astro site to production?"
+  shortAnswer: "Push your Astro project to GitHub, connect the repo to Vercel, and Vercel auto-detects the build settings — live URL in under 5 minutes, no manual server configuration required."
+
+faq:
+  - question: "Do I need a custom domain to deploy on Vercel?"
+    answer: "No. Vercel gives every project a free .vercel.app subdomain automatically. A custom domain can be added later from the project settings."
+  - question: "Does Vercel rebuild automatically when I push new content?"
+    answer: "Yes. Once connected to GitHub, every push to the main branch triggers an automatic rebuild and redeploy, with no manual trigger needed."
+    
 ---
 
 ## How to Deploy Astro to Vercel
