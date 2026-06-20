@@ -1,6 +1,18 @@
 import { defineCollection, z } from 'astro:content'
 import { glob } from 'astro/loaders'
 
+const answerBoxSchema = z.object({
+  question: z.string(),
+  shortAnswer: z.string(),
+}).optional()
+
+const faqSchema = z.array(
+  z.object({
+    question: z.string(),
+    answer: z.string(),
+  })
+).optional()
+
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: ({ image }) => z.object({
@@ -10,6 +22,8 @@ const posts = defineCollection({
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
     heroImageCloudinary: z.string().optional(),
+    answerBox: answerBoxSchema,
+    faq: faqSchema,
   }),
 })
 
@@ -26,6 +40,8 @@ const reviews = defineCollection({
     publishedAt: z.date(),
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
+    answerBox: answerBoxSchema,
+    faq: faqSchema,
   }),
 })
 
@@ -41,6 +57,8 @@ const compares = defineCollection({
     publishedAt: z.date(),
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
+    answerBox: answerBoxSchema,
+    faq: faqSchema,
   }),
 })
 
@@ -54,6 +72,8 @@ const guides = defineCollection({
     publishedAt: z.date(),
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
+    answerBox: answerBoxSchema,
+    faq: faqSchema,
   }),
 })
 

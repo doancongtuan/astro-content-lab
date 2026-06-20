@@ -5,6 +5,7 @@ import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
+import FAQSection from '../../components/content/FAQSection.astro'
 
 export async function getStaticPaths() {
   const reviews = await getCollection('reviews')
@@ -98,6 +99,8 @@ const stars = '★'.repeat(Math.floor(review.data.rating)) +
     <div class="post-body prose">
       <Content />
     </div>
+     
+    {review.data.faq && <FAQSection items={review.data.faq} />}
 
   </article>
   <ProjectBanner />
