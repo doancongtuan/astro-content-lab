@@ -65,6 +65,8 @@ The free Hobby plan covers most personal projects comfortably:
 
 For a content site getting normal traffic, you won't hit these limits. If you do, it means your site is doing well enough that paying $20/mo for Pro is a reasonable decision.
 
+Try [Vercel](/go/vercel/) for yourself.
+
 ## When Vercel is not the right choice
 
 If you need Astro SSR (server-side rendering) at scale, Vercel's free tier has function execution limits. Heavy SSR workloads belong on a paid plan or a VPS.
@@ -74,3 +76,5 @@ If you're already running a VPS and want everything in one place, self-hosting A
 ## My verdict
 
 For static Astro sites, Vercel is the default recommendation. Zero friction, generous free tier, excellent DX. The only reason to look elsewhere is if you need full server control or want to avoid the vendor relationship.
+
+Deploy your own project on [Vercel](/go/vercel/).

@@ -1,0 +1,26 @@
+---
+// src/pages/go/[slug].astro
+export const prerender = false
+
+import { getEntry } from 'astro:content'
+
+const { slug } = Astro.params
+
+if (!slug) {
+  return Astro.redirect('/404', 404)
+}
+
+const entry = await getEntry('affiliates', slug)
+
+if (!entry) {
+  return Astro.redirect('/404', 404)
+}
+
+return new Response(null, {
+  status: 302,
+  headers: {
+    Location: entry.data.affiliateUrl,
+    'X-Robots-Tag': 'noindex, nofollow',
+  },
+})
+---

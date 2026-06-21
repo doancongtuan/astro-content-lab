@@ -55,6 +55,8 @@ The control panel is genuinely one of the better ones in the budget hosting spac
 
 **LiteSpeed cache.** Hostinger uses LiteSpeed servers with built-in caching. For WordPress, this makes a noticeable difference over Apache/PHP-FPM setups at comparable prices.
 
+Check current pricing on [Hostinger's website](/go/hostinger/)
+
 ## What Hostinger gets wrong
 
 **The renewal pricing reality.**
@@ -114,3 +116,5 @@ Hostinger is a legitimate option for beginners. The setup is easy, the price is 
 The renewal pricing is the real test. If you go in knowing what you'll pay after year one, and the project fits within shared hosting limits, Hostinger does the job.
 
 If you outgrow it — and most serious projects eventually do — moving to a VPS gives you full control at a comparable ongoing cost. That's a later conversation.
+
+Check current pricing on [Hostinger's website](/go/hostinger/)

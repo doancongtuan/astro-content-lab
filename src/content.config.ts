@@ -77,9 +77,18 @@ const guides = defineCollection({
   }),
 })
 
+const affiliates = defineCollection({
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/affiliates' }),
+  schema: z.object({
+    slug: z.string(),
+    affiliateUrl: z.string().url(),
+  }),
+})
+
 export const collections = {
   posts,
   reviews,
   compares,
   guides,
+  affiliates,
 }
