@@ -1,0 +1,32 @@
+---
+// src/components/content/WinnerBadge.astro
+interface Props {
+  winner: string
+  itemA: string
+  itemB: string
+}
+
+const { winner, itemA, itemB } = Astro.props
+
+const normalize = (s: string) => s.trim().toLowerCase()
+const w = normalize(winner)
+
+type State = 'left' | 'right' | 'depends'
+
+let state: State = 'depends'
+if (w === normalize(itemA)) state = 'left'
+else if (w === normalize(itemB)) state = 'right'
+
+const stateStyles: Record<State, { class: string; label: string }> = {
+  left: { class: 'bg-amber-50 border-amber-200 text-amber-900', label: itemA },
+  right: { class: 'bg-amber-50 border-amber-200 text-amber-900', label: itemB },
+  depends: { class: 'bg-slate-50 border-slate-200 text-slate-700', label: 'Depends' },
+}
+
+const style = stateStyles[state]
+---
+
+<div class={`border rounded-xl p-4 mb-4 ${style.class}`}>
+  🏆 <strong>Winner:</strong>
+  <span class="capitalize"> {style.label}</span>
+</div>

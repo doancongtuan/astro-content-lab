@@ -7,6 +7,7 @@ import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
 import FAQSection from '../../components/content/FAQSection.astro'
 import AnswerBox from '../../components/content/AnswerBox.astro'
+import DifficultyBadge from '../../components/content/DifficultyBadge.astro'
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides')
@@ -22,12 +23,6 @@ const { Content } = await render(guide)
 const publishedDate = new Date(guide.data.publishedAt).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 })
-
-const difficultyColors: Record<string, string> = {
-  beginner: 'bg-emerald-100 text-emerald-700',
-  intermediate: 'bg-amber-100 text-amber-700',
-  advanced: 'bg-red-100 text-red-700',
-}
 ---
 
 <BaseLayout
@@ -55,9 +50,7 @@ const difficultyColors: Record<string, string> = {
 
     <div class="mb-8 pb-6 border-b border-slate-200">
       <a href="/guides" class="text-sm text-indigo-600 hover:underline">← Back to Guides</a>
-      <span class={`inline-block mt-3 text-xs font-semibold px-2.5 py-0.5 rounded-full capitalize mb-1 ${difficultyColors[guide.data.difficulty] ?? 'bg-slate-100 text-slate-600'}`}>
-        {guide.data.difficulty}
-      </span>
+      <DifficultyBadge difficulty={guide.data.difficulty} />
       <h1 class="text-3xl font-bold text-slate-900 mt-2 mb-2">{guide.data.title}</h1>
       <p class="text-slate-500 mb-2">{guide.data.description}</p>
       <div class="flex gap-2 items-center text-sm text-slate-400">

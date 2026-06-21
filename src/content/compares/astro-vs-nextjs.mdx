@@ -10,6 +10,8 @@ heroImage: ../../assets/images/compares/astro-vs-nextjs.jpg
 heroImageAlt: Astro vs Next.js comparison
 ---
 
+import ComparisonTable from '../../components/content/ComparisonTable.astro'
+
 ## Astro vs Next.js
 
 Both are modern JavaScript frameworks. Both are popular. Both are well-maintained. And they are built for fundamentally different purposes.
@@ -89,15 +91,19 @@ Once you understand how Astro works — static generation, content collections, 
 
 ## Performance comparison
 
-| Factor | Astro | Next.js |
-|---|---|---|
-| Default JavaScript shipped | Zero | React runtime |
-| Static generation | Yes, default | Yes, opt-in |
-| Server-side rendering | Yes, opt-in | Yes, built-in |
-| Content Collections | Built-in | Manual setup |
-| Learning curve | Gentle | Steeper (requires React) |
-| Best for | Content sites | Web applications |
-| E-commerce | Limited | Excellent with React ecosystem |
+<ComparisonTable
+  leftLabel="Astro"
+  rightLabel="Next.js"
+  factors={[
+    { label: "Default JavaScript shipped", left: "Zero", right: "React runtime", winner: "left" },
+    { label: "Static generation", left: "Yes, default", right: "Yes, opt-in", winner: "tie" },
+    { label: "Server-side rendering", left: "Yes, opt-in", right: "Yes, built-in", winner: "tie" },
+    { label: "Content Collections", left: "Built-in", right: "Manual setup", winner: "left" },
+    { label: "Learning curve", left: "Gentle", right: "Steeper (requires React)", winner: "left" },
+    { label: "Best for", left: "Content sites", right: "Web applications", winner: "tie" },
+    { label: "E-commerce", left: "Limited", right: "Excellent with React ecosystem", winner: "right" },
+  ]}
+/>
 
 ## My verdict
 

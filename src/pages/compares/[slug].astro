@@ -7,6 +7,8 @@ import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
 import FAQSection from '../../components/content/FAQSection.astro'
 import AnswerBox from '../../components/content/AnswerBox.astro'
+import VerdictBox from '../../components/content/VerdictBox.astro'
+import WinnerBadge from '../../components/content/WinnerBadge.astro'
 
 export async function getStaticPaths() {
   const compares = await getCollection('compares')
@@ -85,15 +87,9 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
       </div>
     </div>
 
-    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
-      🏆 <strong class="text-amber-900">Winner:</strong>
-      <span class="text-amber-800"> {compare.data.winner}</span>
-    </div>
+    <WinnerBadge winner={compare.data.winner} itemA={compare.data.itemA} itemB={compare.data.itemB} />
 
-    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-8">
-      <strong class="text-emerald-900">Verdict:</strong>
-      <span class="text-emerald-800"> {compare.data.verdict}</span>
-    </div>
+    <VerdictBox verdict={compare.data.verdict} />
 
     <div class="post-body prose">
       <Content />

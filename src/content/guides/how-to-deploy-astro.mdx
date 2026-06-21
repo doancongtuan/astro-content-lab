@@ -16,8 +16,11 @@ faq:
     answer: "No. Vercel gives every project a free .vercel.app subdomain automatically. A custom domain can be added later from the project settings."
   - question: "Does Vercel rebuild automatically when I push new content?"
     answer: "Yes. Once connected to GitHub, every push to the main branch triggers an automatic rebuild and redeploy, with no manual trigger needed."
-    
+
 ---
+
+import PrerequisitesBox from '../../components/content/PrerequisitesBox.astro'
+import StepBlock from '../../components/content/StepBlock.astro'
 
 ## How to Deploy Astro to Vercel
 
@@ -25,25 +28,29 @@ Vercel is the easiest way to get an Astro site live. It connects to your GitHub 
 
 This guide assumes you already have an Astro project pushed to GitHub. If not, do that first.
 
-## Prerequisites
+<PrerequisitesBox items={[
+  "An Astro project on GitHub",
+  "A free Vercel account (sign up at vercel.com)",
+  "No server knowledge required",
+]} />
 
-- An Astro project on GitHub
-- A free Vercel account (sign up at vercel.com)
-- No server knowledge required
-
-## Step 1: Create a Vercel account
+<StepBlock number={1} title="Create a Vercel account">
 
 Go to [vercel.com](https://vercel.com) and sign up with your GitHub account.
 
 Using GitHub to sign in is important — it lets Vercel access your repos directly without extra configuration.
 
-## Step 2: Import your GitHub repo
+</StepBlock>
+
+<StepBlock number={2} title="Import your GitHub repo">
 
 From the Vercel dashboard, click **Add New Project**.
 
 Vercel will show your GitHub repos. Find `astro-content-lab` (or whatever your repo is named) and click **Import**.
 
-## Step 3: Configure the project
+</StepBlock>
+
+<StepBlock number={3} title="Configure the project">
 
 Vercel detects Astro automatically. You should see:
 
@@ -55,9 +62,9 @@ Do not change these. Vercel has built-in support for Astro and sets everything c
 
 If you have environment variables (`.env` file), add them here under **Environment Variables** before deploying.
 
-## Step 4: Deploy
+</StepBlock>
 
-## The deployment in screenshots
+<StepBlock number={4} title="Deploy">
 
 ![Vercel import repository screen](../../assets/images/guides/deploy-astro-2.jpg)
 
@@ -69,7 +76,9 @@ Vercel runs `npm install` and `astro build`, then uploads the output to their CD
 
 When it finishes, you get a live URL like `astro-content-lab.vercel.app`.
 
-## Step 5: Test the live site
+</StepBlock>
+
+<StepBlock number={5} title="Test the live site" isLast={true}>
 
 Open the URL and check:
 
@@ -79,6 +88,8 @@ Open the URL and check:
 - No 404 errors on known pages
 
 If something looks wrong, check the build logs in the Vercel dashboard — they show the exact error.
+
+</StepBlock>
 
 ## Auto-deploy on every push
 

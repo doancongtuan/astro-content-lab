@@ -1,0 +1,31 @@
+---
+// src/components/content/VerdictBox.astro
+interface Props {
+  verdict: string
+  rating?: number
+  maxRating?: number
+}
+
+const { verdict, rating, maxRating = 5 } = Astro.props
+
+function scoreBadgeClass(score: number, max: number): string {
+  const ratio = score / max
+  if (ratio >= 0.8) return 'bg-emerald-100 text-emerald-700'
+  if (ratio >= 0.6) return 'bg-amber-100 text-amber-700'
+  return 'bg-red-100 text-red-700'
+}
+---
+
+<div class="bg-indigo-50 border border-indigo-200 rounded-xl p-5 mb-8">
+  <div class="flex items-start justify-between gap-3">
+    <p class="m-0">
+      <strong class="text-indigo-900">Verdict:</strong>
+      <span class="text-indigo-800"> {verdict}</span>
+    </p>
+    {typeof rating === 'number' && (
+      <span class={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full ${scoreBadgeClass(rating, maxRating)}`}>
+        {rating.toFixed(1)}/{maxRating}
+      </span>
+    )}
+  </div>
+</div>
