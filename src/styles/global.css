@@ -109,3 +109,26 @@ body {
 }
 .prose tr:last-child td { border-bottom: none; }
 .prose tr:hover td { background: var(--color-bg-soft); }
+
+.prose h2,
+.prose h3 {
+  scroll-margin-top: 110px;
+}
+
+@media (max-width: 1023px) {
+  .prose h2,
+  .prose h3 {
+    scroll-margin-top: 130px;
+  }
+}
+.post-body h2,
+.post-body h3 {
+  scroll-margin-top: 130px;
+}
+
+@media (min-width: 1024px) {
+  .post-body h2,
+  .post-body h3 {
+    scroll-margin-top: 100px;
+  }
+}

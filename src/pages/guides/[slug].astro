@@ -8,6 +8,13 @@ import SchemaOrg from '../../components/SchemaOrg.astro'
 import FAQSection from '../../components/content/FAQSection.astro'
 import AnswerBox from '../../components/content/AnswerBox.astro'
 import DifficultyBadge from '../../components/content/DifficultyBadge.astro'
+import TableOfContents from '../../components/TableOfContents.astro'
+import ReadingProgress from '../../components/ReadingProgress.astro'
+import Breadcrumb from '../../components/Breadcrumb.astro'
+import ShareButtons from '../../components/ShareButtons.astro'
+import AuthorBox from '../../components/AuthorBox.astro'
+import NewsletterBox from '../../components/NewsletterBox.astro'
+import RelatedPosts from '../../components/RelatedPosts.astro'
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides')
@@ -18,11 +25,24 @@ export async function getStaticPaths() {
 }
 
 const { guide } = Astro.props
-const { Content } = await render(guide)
+const { Content, headings } = await render(guide)
 
 const publishedDate = new Date(guide.data.publishedAt).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 })
+
+const allGuides = await getCollection('guides')
+const currentTags: string[] = guide.data.tags ?? []
+const related = allGuides
+  .filter((g) => g.id !== guide.id)
+  .map((g) => {
+    const pTags: string[] = g.data.tags ?? []
+    const tagScore = pTags.filter((t) => currentTags.includes(t)).length
+    return { g, tagScore }
+  })
+  .sort((a, b) => b.tagScore - a.tagScore)
+  .slice(0, 3)
+  .map((r) => r.g)
 ---
 
 <BaseLayout
@@ -32,32 +52,39 @@ const publishedDate = new Date(guide.data.publishedAt).toLocaleDateString('en-US
   ogType="article"
   narrow
 >
-<SchemaOrg
-  type="Article"
-  title={guide.data.title}
-  description={guide.data.description}
-  publishedAt={guide.data.publishedAt}
-/>
-<SchemaOrg
-  type="BreadcrumbList"
-  items={[
-    { name: 'Home', url: `${SITE_URL}/` },
-    { name: 'Guides', url: `${SITE_URL}/guides/` },
-    { name: guide.data.title, url: Astro.url.href },
-  ]}
-/>
-  <article>
+  <SchemaOrg
+    type="Article"
+    title={guide.data.title}
+    description={guide.data.description}
+    publishedAt={guide.data.publishedAt}
+  />
+  <SchemaOrg
+    type="BreadcrumbList"
+    items={[
+      { name: 'Home', url: `${SITE_URL}/` },
+      { name: 'Guides', url: `${SITE_URL}/guides/` },
+      { name: guide.data.title, url: Astro.url.href },
+    ]}
+  />
 
+  <ReadingProgress />
+
+  <article>
     <div class="mb-8 pb-6 border-b border-slate-200">
-      <a href="/guides" class="text-sm text-indigo-600 hover:underline">← Back to Guides</a>
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Guides', href: '/guides' },
+        { label: guide.data.title },
+      ]} />
       <DifficultyBadge difficulty={guide.data.difficulty} />
       <h1 class="text-3xl font-bold text-slate-900 mt-2 mb-2">{guide.data.title}</h1>
       <p class="text-slate-500 mb-2">{guide.data.description}</p>
-      <div class="flex gap-2 items-center text-sm text-slate-400">
+      <div class="flex gap-2 items-center text-sm text-slate-400 mb-2">
         <span>⏱ {guide.data.estimatedTime}</span>
         <span>·</span>
         <span>Published {publishedDate}</span>
       </div>
+      <ShareButtons title={guide.data.title} url={Astro.url.href} />
     </div>
 
     {guide.data.answerBox && (
@@ -79,12 +106,30 @@ const publishedDate = new Date(guide.data.publishedAt).toLocaleDateString('en-US
       </div>
     )}
 
-    <div class="post-body prose">
-      <Content />
+    {headings.length > 0 && (
+      <TableOfContents headings={headings} variant="mobile" />
+    )}
+
+    <div class="lg:flex lg:gap-12 lg:items-start">
+      <div class="lg:flex-1 min-w-0">
+        <div class="post-body prose">
+          <Content />
+        </div>
+        {guide.data.faq && <FAQSection items={guide.data.faq} />}
+        <AuthorBox />
+        <NewsletterBox />
+      </div>
+
+      {headings.length > 0 && (
+        <aside class="hidden lg:block lg:w-56 shrink-0 sticky top-24 self-start">
+          <TableOfContents headings={headings} variant="desktop" />
+        </aside>
+      )}
     </div>
 
-    {guide.data.faq && <FAQSection items={guide.data.faq} />}
+    <RelatedPosts posts={related} title="More Guides" basePath="/guides/" />
 
   </article>
+
   <ProjectBanner />
 </BaseLayout>

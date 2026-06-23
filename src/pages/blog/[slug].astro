@@ -7,6 +7,13 @@ import ProjectBanner from '../../components/ProjectBanner.astro'
 import SchemaOrg from '../../components/SchemaOrg.astro'
 import FAQSection from '../../components/content/FAQSection.astro'
 import AnswerBox from '../../components/content/AnswerBox.astro'
+import TableOfContents from '../../components/TableOfContents.astro'
+import ReadingProgress from '../../components/ReadingProgress.astro'
+import RelatedPosts from '../../components/RelatedPosts.astro'
+import AuthorBox from '../../components/AuthorBox.astro'
+import ShareButtons from '../../components/ShareButtons.astro'
+import Breadcrumb from '../../components/Breadcrumb.astro'
+import NewsletterBox from '../../components/NewsletterBox.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
@@ -17,13 +24,26 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props
-const { Content } = await render(post)
+const { Content, headings } = await render(post)
 
 const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric'
 })
+
+const allPosts = await getCollection('posts')
+const currentTags: string[] = post.data.tags ?? []
+const related = allPosts
+  .filter((p) => p.id !== post.id)
+  .map((p) => {
+    const pTags: string[] = p.data.tags ?? []
+    const tagScore = pTags.filter((t) => currentTags.includes(t)).length
+    return { p, tagScore }
+  })
+  .sort((a, b) => b.tagScore - a.tagScore)
+  .slice(0, 3)
+  .map((r) => r.p)
 ---
 
 <BaseLayout
@@ -33,28 +53,35 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
   ogType="article"
   narrow
 >
-<SchemaOrg
+  <SchemaOrg
     type="Article"
     title={post.data.title}
     description={post.data.description}
     publishedAt={post.data.publishedAt}
-/>
-<SchemaOrg
-  type="BreadcrumbList"
-  items={[
-    { name: 'Home', url: `${SITE_URL}/` },
-    { name: 'Blog', url: `${SITE_URL}/blog/` },
-    { name: post.data.title, url: Astro.url.href },
-  ]}
-/>
+  />
+  <SchemaOrg
+    type="BreadcrumbList"
+    items={[
+      { name: 'Home', url: `${SITE_URL}/` },
+      { name: 'Blog', url: `${SITE_URL}/blog/` },
+      { name: post.data.title, url: Astro.url.href },
+    ]}
+  />
+
+  <ReadingProgress />
 
   <article>
-
     <div class="mb-8 pb-6 border-b border-slate-200">
-      <a href="/blog" class="text-sm text-indigo-600 hover:underline">← Back to Blog</a>
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: post.data.title },
+      ]} />
       <h1 class="text-3xl font-bold text-slate-900 mt-4 mb-2">{post.data.title}</h1>
       <p class="text-slate-500 mb-2">{post.data.description}</p>
       <p class="text-sm text-slate-400">Published {publishedDate}</p>
+      <ShareButtons title={post.data.title} url={Astro.url.href} /> 
+      
     </div>
 
     {post.data.answerBox && (
@@ -87,12 +114,32 @@ const publishedDate = new Date(post.data.publishedAt).toLocaleDateString('en-US'
       </div>
     ) : null}
 
-    <div class="post-body prose">
-      <Content />
+    {headings.length > 0 && (
+      <TableOfContents headings={headings} variant="mobile" />
+    )}
+
+    <div class="lg:flex lg:gap-12 lg:items-start">
+      <div class="lg:flex-1 min-w-0">
+        <div class="post-body prose">
+          <Content />
+        </div>
+        {post.data.faq && <FAQSection items={post.data.faq} />}
+       
+       <ShareButtons title={post.data.title} url={Astro.url.href} />
+       <AuthorBox />
+       <NewsletterBox />
+      </div>
+
+      {headings.length > 0 && (
+        <aside class="hidden lg:block lg:w-56 shrink-0 sticky top-24 self-start">
+          <TableOfContents headings={headings} variant="desktop" />
+        </aside>
+      )}
     </div>
-    
-    {post.data.faq && <FAQSection items={post.data.faq} />}
-  
+
+    <RelatedPosts posts={related} />
+
   </article>
+
   <ProjectBanner />
 </BaseLayout>

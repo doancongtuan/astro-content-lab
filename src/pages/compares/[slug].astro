@@ -9,6 +9,13 @@ import FAQSection from '../../components/content/FAQSection.astro'
 import AnswerBox from '../../components/content/AnswerBox.astro'
 import VerdictBox from '../../components/content/VerdictBox.astro'
 import WinnerBadge from '../../components/content/WinnerBadge.astro'
+import TableOfContents from '../../components/TableOfContents.astro'
+import ReadingProgress from '../../components/ReadingProgress.astro'
+import Breadcrumb from '../../components/Breadcrumb.astro'
+import ShareButtons from '../../components/ShareButtons.astro'
+import AuthorBox from '../../components/AuthorBox.astro'
+import NewsletterBox from '../../components/NewsletterBox.astro'
+import RelatedPosts from '../../components/RelatedPosts.astro'
 
 export async function getStaticPaths() {
   const compares = await getCollection('compares')
@@ -19,11 +26,24 @@ export async function getStaticPaths() {
 }
 
 const { compare } = Astro.props
-const { Content } = await render(compare)
+const { Content, headings } = await render(compare)
 
 const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 })
+
+const allCompares = await getCollection('compares')
+const currentTags: string[] = compare.data.tags ?? []
+const related = allCompares
+  .filter((c) => c.id !== compare.id)
+  .map((c) => {
+    const pTags: string[] = c.data.tags ?? []
+    const tagScore = pTags.filter((t) => currentTags.includes(t)).length
+    return { c, tagScore }
+  })
+  .sort((a, b) => b.tagScore - a.tagScore)
+  .slice(0, 3)
+  .map((r) => r.c)
 ---
 
 <BaseLayout
@@ -33,29 +53,35 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
   ogType="article"
   narrow
 >
-<SchemaOrg
-  type="Article"
-  title={compare.data.title}
-  description={compare.data.description}
-  publishedAt={compare.data.publishedAt}
-/>
+  <SchemaOrg
+    type="Article"
+    title={compare.data.title}
+    description={compare.data.description}
+    publishedAt={compare.data.publishedAt}
+  />
+  <SchemaOrg
+    type="BreadcrumbList"
+    items={[
+      { name: 'Home', url: `${SITE_URL}/` },
+      { name: 'Compares', url: `${SITE_URL}/compares/` },
+      { name: compare.data.title, url: Astro.url.href },
+    ]}
+  />
 
-<SchemaOrg
-  type="BreadcrumbList"
-  items={[
-    { name: 'Home', url: `${SITE_URL}/` },
-    { name: 'Compares', url: `${SITE_URL}/compares/` },
-    { name: compare.data.title, url: Astro.url.href },
-  ]}
-/>
+  <ReadingProgress />
+
   <article>
-
     <div class="mb-8 pb-6 border-b border-slate-200">
-      <a href="/compares" class="text-sm text-indigo-600 hover:underline">← Back to Comparisons</a>
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Compares', href: '/compares' },
+        { label: compare.data.title },
+      ]} />
       <span class="inline-block mt-3 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-700">Compare</span>
       <h1 class="text-3xl font-bold text-slate-900 mt-2 mb-2">{compare.data.title}</h1>
       <p class="text-slate-500 mb-2">{compare.data.description}</p>
-      <p class="text-sm text-slate-400">Published {publishedDate}</p>
+      <p class="text-sm text-slate-400 mb-2">Published {publishedDate}</p>
+        <ShareButtons title={compare.data.title} url={Astro.url.href} />
     </div>
 
     {compare.data.answerBox && (
@@ -77,26 +103,43 @@ const publishedDate = new Date(compare.data.publishedAt).toLocaleDateString('en-
       </div>
     )}
 
-    <div class="flex items-center gap-4 p-6 bg-slate-50 border border-slate-200 rounded-xl mb-4 text-center">
-      <div class="flex-1">
-        <h3 class="text-lg font-semibold text-slate-900 m-0">{compare.data.itemA}</h3>
+    {headings.length > 0 && (
+      <TableOfContents headings={headings} variant="mobile" />
+    )}
+
+    <div class="lg:flex lg:gap-12 lg:items-start">
+      <div class="lg:flex-1 min-w-0">
+        <div class="flex items-center gap-4 p-6 bg-slate-50 border border-slate-200 rounded-xl mb-4 text-center">
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-slate-900 m-0">{compare.data.itemA}</h3>
+          </div>
+          <div class="flex-shrink-0 text-xs font-bold text-slate-500 bg-slate-200 px-3 py-1.5 rounded-full">VS</div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-slate-900 m-0">{compare.data.itemB}</h3>
+          </div>
+        </div>
+
+        <WinnerBadge winner={compare.data.winner} itemA={compare.data.itemA} itemB={compare.data.itemB} />
+        <VerdictBox verdict={compare.data.verdict} />
+
+        <div class="post-body prose">
+          <Content />
+        </div>
+        {compare.data.faq && <FAQSection items={compare.data.faq} />}
+        <AuthorBox />
+        <NewsletterBox />
       </div>
-      <div class="flex-shrink-0 text-xs font-bold text-slate-500 bg-slate-200 px-3 py-1.5 rounded-full">VS</div>
-      <div class="flex-1">
-        <h3 class="text-lg font-semibold text-slate-900 m-0">{compare.data.itemB}</h3>
-      </div>
+
+      {headings.length > 0 && (
+        <aside class="hidden lg:block lg:w-56 shrink-0 sticky top-24 self-start">
+          <TableOfContents headings={headings} variant="desktop" />
+        </aside>
+      )}
     </div>
 
-    <WinnerBadge winner={compare.data.winner} itemA={compare.data.itemA} itemB={compare.data.itemB} />
-
-    <VerdictBox verdict={compare.data.verdict} />
-
-    <div class="post-body prose">
-      <Content />
-    </div>
-
-    {compare.data.faq && <FAQSection items={compare.data.faq} />}
+    <RelatedPosts posts={related} title="More Comparisons" basePath="/compares/" />
 
   </article>
+
   <ProjectBanner />
 </BaseLayout>

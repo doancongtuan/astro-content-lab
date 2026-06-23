@@ -1,0 +1,154 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[]
+  variant?: 'mobile' | 'desktop' | 'both'
+}
+
+const { headings, variant = 'both' } = Astro.props
+const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3)
+const showDesktop = variant === 'desktop' || variant === 'both'
+const showMobile = variant === 'mobile' || variant === 'both'
+---
+
+{filtered.length > 0 && (
+  <>
+    {showDesktop && (
+      <nav
+        aria-label="Table of contents"
+        class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-gray-200 bg-white/80 backdrop-blur shadow-sm p-4 text-sm w-full"
+      >
+        <p class="font-semibold text-gray-900 mb-3">On this page</p>
+        <ul class="space-y-0.5">
+          {filtered.map((h) => (
+            <li>
+              
+              <a href={`#${h.slug}`}
+                data-toc-link
+                data-toc-slug={h.slug}
+                class={`block px-2 py-1.5 rounded-lg leading-snug text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-150 ${h.depth === 3 ? 'pl-5' : ''}`}
+              >
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    {showMobile && (
+      <div class="lg:hidden sticky top-16 z-40 bg-white border-b border-gray-200 shadow-sm mb-6">
+        <button
+          type="button"
+          id="mobile-toc-btn"
+          aria-controls="mobile-toc-panel"
+          aria-expanded="false"
+          class="w-full flex items-center justify-between px-5 py-3 text-sm font-medium text-gray-700"
+        >
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h10M4 18h7" />
+            </svg>
+            On this page
+          </span>
+          <span id="mobile-toc-current" class="text-xs text-indigo-600 truncate max-w-[180px] text-right">Jump to section</span>
+        </button>
+        <div
+          id="mobile-toc-panel"
+          class="hidden max-h-[60vh] overflow-y-auto border-t border-gray-100 bg-white"
+        >
+          <ul class="py-2">
+            {filtered.map((h) => (
+              <li>
+                
+                <a href={`#${h.slug}`}
+                  data-toc-link-mobile
+                  data-toc-slug={h.slug}
+                  class={`block px-5 py-2.5 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors ${h.depth === 3 ? 'pl-8' : ''}`}
+                >
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )}
+  </>
+)}
+
+<script is:inline>
+(function () {
+  function initToc() {
+    if (window.__tocInitialized) return
+    window.__tocInitialized = true
+
+    var desktopLinks = document.querySelectorAll('[data-toc-link]')
+    var mobileLinks = document.querySelectorAll('[data-toc-link-mobile]')
+    var mobileBtn = document.getElementById('mobile-toc-btn')
+    var mobilePanel = document.getElementById('mobile-toc-panel')
+    var mobileCurrentLabel = document.getElementById('mobile-toc-current')
+
+    if (mobileBtn && mobilePanel) {
+      mobileBtn.addEventListener('click', function () {
+        var isOpen = mobilePanel.classList.contains('hidden')
+        mobilePanel.classList.toggle('hidden', !isOpen)
+        mobileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false')
+      })
+    }
+
+    mobileLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (mobilePanel) mobilePanel.classList.add('hidden')
+        if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'false')
+      })
+    })
+
+    var slugs = Array.from(desktopLinks).map(function (l) { return l.getAttribute('data-toc-slug') })
+    var headingEls = slugs.map(function (s) { return document.getElementById(s) }).filter(Boolean)
+
+    function activate(el) {
+      var activeSlug = el ? el.getAttribute('id') : null
+
+      desktopLinks.forEach(function (l) {
+        var isActive = l.getAttribute('data-toc-slug') === activeSlug
+        l.classList.toggle('text-indigo-600', isActive)
+        l.classList.toggle('font-semibold', isActive)
+        l.classList.toggle('bg-indigo-50', isActive)
+        l.classList.toggle('border-l-2', isActive)
+        l.classList.toggle('border-indigo-500', isActive)
+        l.classList.toggle('text-gray-500', !isActive)
+      })
+
+      mobileLinks.forEach(function (l) {
+        var isActive = l.getAttribute('data-toc-slug') === activeSlug
+        l.classList.toggle('text-indigo-600', isActive)
+        l.classList.toggle('bg-indigo-50', isActive)
+        l.classList.toggle('font-medium', isActive)
+      })
+
+      if (mobileCurrentLabel) {
+        var activeLink = Array.from(mobileLinks).find(function (l) {
+          return l.getAttribute('data-toc-slug') === activeSlug
+        })
+        mobileCurrentLabel.textContent = activeLink ? activeLink.textContent.trim() : 'Jump to section'
+      }
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var visible = entries.filter(function (e) { return e.isIntersecting })
+        if (visible.length > 0) activate(visible[0].target)
+      },
+      { rootMargin: '0px 0px -60% 0px', threshold: 0 }
+    )
+
+    headingEls.forEach(function (el) { observer.observe(el) })
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initToc)
+  } else {
+    initToc()
+  }
+})()
+</script>

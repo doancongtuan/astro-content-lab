@@ -11,9 +11,20 @@ const styles = {
   warning: 'border-amber-400 bg-amber-50 text-amber-900',
   tip:     'border-emerald-400 bg-emerald-50 text-emerald-900',
 }
+
+const icons = {
+  info:    'ℹ️',
+  warning: '⚠️',
+  tip:     '💡',
+}
 ---
 
 <div class={`border-l-4 px-4 py-3 rounded-r-lg my-4 ${styles[type]}`}>
-  {title && <p class="font-bold text-sm mb-1">{title}</p>}
-  <slot />
+  <div class="flex items-start gap-2">
+    <span class="text-base leading-tight mt-0.5 shrink-0">{icons[type]}</span>
+    <div>
+      {title && <p class="font-bold text-sm mb-1">{title}</p>}
+      <slot />
+    </div>
+  </div>
 </div>

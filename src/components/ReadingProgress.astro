@@ -1,0 +1,29 @@
+---
+---
+<div
+  id="reading-progress"
+  class="fixed top-0 left-0 z-50 h-0.5 bg-indigo-500 transition-all duration-100"
+  style="width: 0%"
+></div>
+
+<script is:inline>
+(function () {
+  function initProgress() {
+    var bar = document.getElementById('reading-progress')
+    if (!bar) return
+
+    window.addEventListener('scroll', function () {
+      var scrollTop = window.scrollY
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight
+      var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+      bar.style.width = Math.min(progress, 100) + '%'
+    }, { passive: true })
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgress)
+  } else {
+    initProgress()
+  }
+})()
+</script>

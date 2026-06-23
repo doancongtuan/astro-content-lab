@@ -10,6 +10,13 @@ import AnswerBox from '../../components/content/AnswerBox.astro'
 import RatingStars from '../../components/content/RatingStars.astro'
 import ProsConsBox from '../../components/content/ProsConsBox.astro'
 import VerdictBox from '../../components/content/VerdictBox.astro'
+import TableOfContents from '../../components/TableOfContents.astro'
+import ReadingProgress from '../../components/ReadingProgress.astro'
+import Breadcrumb from '../../components/Breadcrumb.astro'
+import ShareButtons from '../../components/ShareButtons.astro'
+import AuthorBox from '../../components/AuthorBox.astro'
+import NewsletterBox from '../../components/NewsletterBox.astro'
+import RelatedPosts from '../../components/RelatedPosts.astro'
 
 export async function getStaticPaths() {
   const reviews = await getCollection('reviews')
@@ -20,11 +27,24 @@ export async function getStaticPaths() {
 }
 
 const { review } = Astro.props
-const { Content } = await render(review)
+const { Content, headings } = await render(review)
 
 const publishedDate = new Date(review.data.publishedAt).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 })
+
+const allReviews = await getCollection('reviews')
+const currentTags: string[] = review.data.tags ?? []
+const related = allReviews
+  .filter((r) => r.id !== review.id)
+  .map((r) => {
+    const pTags: string[] = r.data.tags ?? []
+    const tagScore = pTags.filter((t) => currentTags.includes(t)).length
+    return { r, tagScore }
+  })
+  .sort((a, b) => b.tagScore - a.tagScore)
+  .slice(0, 3)
+  .map((r) => r.r)
 ---
 
 <BaseLayout
@@ -34,33 +54,41 @@ const publishedDate = new Date(review.data.publishedAt).toLocaleDateString('en-U
   ogType="article"
   narrow
 >
-<SchemaOrg
-  type="Review"
-  title={review.data.title}
-  description={review.data.description}
-  publishedAt={review.data.publishedAt}
-  itemReviewed={review.data.productName}
-  rating={review.data.rating}
-/>
-<SchemaOrg
-  type="BreadcrumbList"
-  items={[
-    { name: 'Home', url: `${SITE_URL}/` },
-    { name: 'Reviews', url: `${SITE_URL}/reviews/` },
-    { name: review.data.title, url: Astro.url.href },
-  ]}
-/>
-  <article>
+  <SchemaOrg
+    type="Review"
+    title={review.data.title}
+    description={review.data.description}
+    publishedAt={review.data.publishedAt}
+    itemReviewed={review.data.productName}
+    rating={review.data.rating}
+  />
+  <SchemaOrg
+    type="BreadcrumbList"
+    items={[
+      { name: 'Home', url: `${SITE_URL}/` },
+      { name: 'Reviews', url: `${SITE_URL}/reviews/` },
+      { name: review.data.title, url: Astro.url.href },
+    ]}
+  />
 
+  <ReadingProgress />
+
+  <article>
     <div class="mb-8 pb-6 border-b border-slate-200">
-      <a href="/reviews" class="text-sm text-indigo-600 hover:underline">← Back to Reviews</a>
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Reviews', href: '/reviews' },
+        { label: review.data.title },
+      ]} />
       <span class="inline-block mt-3 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-violet-100 text-violet-700">Review</span>
       <h1 class="text-3xl font-bold text-slate-900 mt-2 mb-2">{review.data.title}</h1>
       <p class="text-slate-500 mb-2">{review.data.description}</p>
-      <div class="mb-1">
+      <div class="flex items-center gap-3 mb-2">
         <RatingStars rating={review.data.rating} />
+        <p class="text-sm text-slate-400">Published {publishedDate}</p>
       </div>
-      <p class="text-sm text-slate-400">Published {publishedDate}</p>
+      <ShareButtons title={review.data.title} url={Astro.url.href} />
+    
     </div>
 
     {review.data.answerBox && (
@@ -82,16 +110,32 @@ const publishedDate = new Date(review.data.publishedAt).toLocaleDateString('en-U
       </div>
     )}
 
-    <ProsConsBox pros={review.data.pros} cons={review.data.cons} />
+    {headings.length > 0 && (
+      <TableOfContents headings={headings} variant="mobile" />
+    )}
 
-    <VerdictBox verdict={review.data.verdict} rating={review.data.rating} />
+    <div class="lg:flex lg:gap-12 lg:items-start">
+      <div class="lg:flex-1 min-w-0">
+        <ProsConsBox pros={review.data.pros} cons={review.data.cons} />
+        <VerdictBox verdict={review.data.verdict} rating={review.data.rating} />
+        <div class="post-body prose">
+          <Content />
+        </div>
+        {review.data.faq && <FAQSection items={review.data.faq} />}
+        <AuthorBox />
+        <NewsletterBox />
+      </div>
 
-    <div class="post-body prose">
-      <Content />
+      {headings.length > 0 && (
+        <aside class="hidden lg:block lg:w-56 shrink-0 sticky top-24 self-start">
+          <TableOfContents headings={headings} variant="desktop" />
+        </aside>
+      )}
     </div>
-     
-    {review.data.faq && <FAQSection items={review.data.faq} />}
+
+    <RelatedPosts posts={related} title="More Reviews" basePath="/reviews/" />
 
   </article>
+
   <ProjectBanner />
 </BaseLayout>
