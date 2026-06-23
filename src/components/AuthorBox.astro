@@ -47,8 +47,8 @@ const socials = [
 ].filter((s) => s.href)
 ---
 
-<div class="mt-12 border-t border-gray-200 pt-8">
-  <div class="flex items-start gap-4 p-6 rounded-2xl bg-gray-50 border border-gray-200">
+<div class="mt-12 border-t border-gray-200 dark:border-slate-700 pt-8">
+  <div class="flex items-start gap-4 p-6 rounded-2xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700">
     {AUTHOR.avatar ? (
       <img
         src={AUTHOR.avatar}
@@ -56,27 +56,24 @@ const socials = [
         class="w-16 h-16 rounded-full object-cover shrink-0"
       />
     ) : (
-      <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
-        <span class="text-2xl font-bold text-indigo-600">{AUTHOR.name.charAt(0)}</span>
+      <div class="w-16 h-16 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center shrink-0">
+        <span class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{AUTHOR.name.charAt(0)}</span>
       </div>
     )}
     <div class="flex-1 min-w-0">
-      <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Written by</p>
-      <h3 class="font-bold text-gray-900 text-lg">{AUTHOR.name}</h3>
-      <p class="text-gray-600 text-sm mt-1 leading-relaxed">{AUTHOR.bio}</p>
-      <div class="flex flex-wrap gap-2 mt-3"> Follow me: 
-        {socials.map((s) => {
-          return (
-            
-            <a href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={s.label}
-              class="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:border-indigo-400 transition-colors duration-150 [&>svg]:w-3.5 [&>svg]:h-3.5"
-              set:html={s.svg}
-            />
-          )
-        })}
+      <p class="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-1">Written by</p>
+      <h3 class="font-bold text-gray-900 dark:text-slate-100 text-lg">{AUTHOR.name}</h3>
+      <p class="text-gray-600 dark:text-slate-400 text-sm mt-1 leading-relaxed">{AUTHOR.bio}</p>
+      <div class="flex flex-wrap gap-2 mt-3 text-gray-500 dark:text-slate-400"> Follow me:
+        {socials.map((s) => (
+          <a href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={s.label}
+            class="w-7 h-7 rounded-full border border-gray-300 dark:border-slate-600 flex items-center justify-center text-gray-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-400 dark:hover:border-indigo-400 transition-colors duration-150 [&>svg]:w-3.5 [&>svg]:h-3.5"
+            set:html={s.svg}
+          />
+        ))}
       </div>
     </div>
   </div>

@@ -15,17 +15,16 @@ const showMobile = variant === 'mobile' || variant === 'both'
     {showDesktop && (
       <nav
         aria-label="Table of contents"
-        class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-gray-200 bg-white/80 backdrop-blur shadow-sm p-4 text-sm w-full"
+        class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-gray-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur shadow-sm p-4 text-sm w-full"
       >
-        <p class="font-semibold text-gray-900 mb-3">On this page</p>
+        <p class="font-semibold text-gray-900 dark:text-slate-100 mb-3">On this page</p>
         <ul class="space-y-0.5">
           {filtered.map((h) => (
             <li>
-              
               <a href={`#${h.slug}`}
                 data-toc-link
                 data-toc-slug={h.slug}
-                class={`block px-2 py-1.5 rounded-lg leading-snug text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-150 ${h.depth === 3 ? 'pl-5' : ''}`}
+                class={`block px-2 py-1.5 rounded-lg leading-snug text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-slate-100 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors duration-150 ${h.depth === 3 ? 'pl-5' : ''}`}
               >
                 {h.text}
               </a>
@@ -36,34 +35,33 @@ const showMobile = variant === 'mobile' || variant === 'both'
     )}
 
     {showMobile && (
-      <div class="lg:hidden sticky top-16 z-40 bg-white border-b border-gray-200 shadow-sm mb-6">
+      <div class="lg:hidden sticky top-16 z-40 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 shadow-sm mb-6 transition-colors duration-200">
         <button
           type="button"
           id="mobile-toc-btn"
           aria-controls="mobile-toc-panel"
           aria-expanded="false"
-          class="w-full flex items-center justify-between px-5 py-3 text-sm font-medium text-gray-700"
+          class="w-full flex items-center justify-between px-5 py-3 text-sm font-medium text-gray-700 dark:text-slate-300"
         >
           <span class="flex items-center gap-2">
-            <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <svg class="w-4 h-4 text-gray-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h10M4 18h7" />
             </svg>
             On this page
           </span>
-          <span id="mobile-toc-current" class="text-xs text-indigo-600 truncate max-w-[180px] text-right">Jump to section</span>
+          <span id="mobile-toc-current" class="text-xs text-indigo-600 dark:text-indigo-400 truncate max-w-[180px] text-right">Jump to section</span>
         </button>
         <div
           id="mobile-toc-panel"
-          class="hidden max-h-[60vh] overflow-y-auto border-t border-gray-100 bg-white"
+          class="hidden max-h-[60vh] overflow-y-auto border-t border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-900"
         >
           <ul class="py-2">
             {filtered.map((h) => (
               <li>
-                
                 <a href={`#${h.slug}`}
                   data-toc-link-mobile
                   data-toc-slug={h.slug}
-                  class={`block px-5 py-2.5 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors ${h.depth === 3 ? 'pl-8' : ''}`}
+                  class={`block px-5 py-2.5 text-sm text-gray-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-slate-800 transition-colors ${h.depth === 3 ? 'pl-8' : ''}`}
                 >
                   {h.text}
                 </a>
@@ -112,17 +110,22 @@ const showMobile = variant === 'mobile' || variant === 'both'
       desktopLinks.forEach(function (l) {
         var isActive = l.getAttribute('data-toc-slug') === activeSlug
         l.classList.toggle('text-indigo-600', isActive)
+        l.classList.toggle('dark:text-indigo-400', isActive)
         l.classList.toggle('font-semibold', isActive)
         l.classList.toggle('bg-indigo-50', isActive)
+        l.classList.toggle('dark:bg-slate-800', isActive)
         l.classList.toggle('border-l-2', isActive)
         l.classList.toggle('border-indigo-500', isActive)
         l.classList.toggle('text-gray-500', !isActive)
+        l.classList.toggle('dark:text-slate-400', !isActive)
       })
 
       mobileLinks.forEach(function (l) {
         var isActive = l.getAttribute('data-toc-slug') === activeSlug
         l.classList.toggle('text-indigo-600', isActive)
+        l.classList.toggle('dark:text-indigo-400', isActive)
         l.classList.toggle('bg-indigo-50', isActive)
+        l.classList.toggle('dark:bg-slate-800', isActive)
         l.classList.toggle('font-medium', isActive)
       })
 

@@ -12,18 +12,18 @@ const latestReviews = reviews.slice(0, 2)
 <BaseLayout title="Astro Content Lab — Learn Astro from Scratch">
 
   <!-- Hero -->
-  <section class="py-16 text-center border-b border-slate-200 mb-12">
-    <h1 class="text-4xl font-bold text-slate-900 max-w-2xl mx-auto mb-4 leading-tight">
+  <section class="py-16 text-center border-b border-slate-200 dark:border-slate-700 mb-12">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-slate-100 max-w-2xl mx-auto mb-4 leading-tight">
       Learn Astro by Building a Real Content Site
     </h1>
-    <p class="text-lg text-slate-500 max-w-xl mx-auto mb-8">
+    <p class="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-8">
       A hands-on series for WordPress users and beginners who want to understand modern web development — from static site to mini CMS.
     </p>
     <div class="flex gap-3 justify-center flex-wrap">
       <a href="/blog" class="inline-block px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors no-underline">
         Read the Blog
       </a>
-      <a href="https://github.com/doancongtuan/astro-content-lab" target="_blank" class="inline-block px-5 py-2.5 border border-slate-200 text-slate-900 font-semibold rounded-lg hover:border-indigo-500 hover:text-indigo-600 transition-colors no-underline">
+      <a href="https://github.com/doancongtuan/astro-content-lab" target="_blank" class="inline-block px-5 py-2.5 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-slate-100 font-semibold rounded-lg hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline">
         View on GitHub
       </a>
     </div>
@@ -32,17 +32,17 @@ const latestReviews = reviews.slice(0, 2)
   <!-- Latest Posts -->
   <section class="mb-14">
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-slate-900">Latest Posts</h2>
-      <a href="/blog" class="text-sm text-indigo-600 font-medium hover:underline">See all →</a>
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Latest Posts</h2>
+      <a href="/blog" class="text-sm text-indigo-600 dark:text-indigo-400 font-medium hover:underline">See all →</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {latestPosts.map((post) => (
-        <a href={`/blog/${post.id}`} class="flex flex-col justify-between border border-slate-200 rounded-xl p-5 no-underline text-slate-900 hover:border-indigo-500 hover:shadow-md transition-all group">
+        <a href={`/blog/${post.id}`} class="flex flex-col justify-between border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl p-5 no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md transition-all group">
           <div>
-            <h3 class="text-base font-semibold mb-2 group-hover:text-indigo-600 transition-colors">{post.data.title}</h3>
-            <p class="text-sm text-slate-500 m-0">{post.data.description}</p>
+            <h3 class="text-base font-semibold mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{post.data.title}</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 m-0">{post.data.description}</p>
           </div>
-          <span class="text-sm text-indigo-600 font-medium mt-4 block">Read more →</span>
+          <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium mt-4 block">Read more →</span>
         </a>
       ))}
     </div>
@@ -51,36 +51,36 @@ const latestReviews = reviews.slice(0, 2)
   <!-- Latest Reviews -->
   <section class="mb-14">
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-slate-900">Latest Reviews</h2>
-      <a href="/reviews" class="text-sm text-indigo-600 font-medium hover:underline">See all →</a>
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Latest Reviews</h2>
+      <a href="/reviews" class="text-sm text-indigo-600 dark:text-indigo-400 font-medium hover:underline">See all →</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {latestReviews.map((review) => (
-        <a href={`/reviews/${review.id}`} class="flex flex-col justify-between border border-slate-200 rounded-xl p-5 no-underline text-slate-900 hover:border-indigo-500 hover:shadow-md transition-all group">
+        <a href={`/reviews/${review.id}`} class="flex flex-col justify-between border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl p-5 no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md transition-all group">
           <div>
-            <span class="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-violet-100 text-violet-700 mb-2">Review</span>
-            <h3 class="text-base font-semibold mb-2 group-hover:text-indigo-600 transition-colors">{review.data.title}</h3>
-            <p class="text-sm text-slate-500 m-0">{review.data.description}</p>
+            <span class="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-violet-100 dark:bg-violet-900 text-violet-700 dark:text-violet-300 mb-2">Review</span>
+            <h3 class="text-base font-semibold mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{review.data.title}</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 m-0">{review.data.description}</p>
             <p class="text-amber-500 text-sm mt-2 m-0">
               {'★'.repeat(Math.floor(review.data.rating))}{'☆'.repeat(5 - Math.floor(review.data.rating))} {review.data.rating}/5
             </p>
           </div>
-          <span class="text-sm text-indigo-600 font-medium mt-4 block">Read review →</span>
+          <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium mt-4 block">Read review →</span>
         </a>
       ))}
     </div>
   </section>
 
   <!-- About section -->
-  <section class="bg-slate-50 border border-slate-200 rounded-xl p-8 mb-4">
-    <h2 class="text-2xl font-bold text-slate-900 mt-0 mb-3">What is Astro Content Lab?</h2>
-    <p class="text-slate-600 mb-3">
+  <section class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-8 mb-4">
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-0 mb-3">What is Astro Content Lab?</h2>
+    <p class="text-slate-600 dark:text-slate-300 mb-3">
       This is the demo project for the series <strong>"Learn Astro from Scratch"</strong> — a practical guide for WordPress users who want to understand how modern static sites work.
     </p>
-    <p class="text-slate-600 mb-4">
+    <p class="text-slate-600 dark:text-slate-300 mb-4">
       Every page on this site was built step by step, documented in the series. The source code is public on GitHub.
     </p>
-    <a href="/about" class="inline-block px-5 py-2.5 border border-slate-200 text-slate-900 font-semibold rounded-lg hover:border-indigo-500 hover:text-indigo-600 transition-colors no-underline">
+    <a href="/about" class="inline-block px-5 py-2.5 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-slate-100 font-semibold rounded-lg hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline">
       About this project →
     </a>
   </section>

@@ -1,5 +1,4 @@
 ---
-// src/components/content/ProsConsBox.astro
 interface Props {
   pros: string[]
   cons: string[]
@@ -9,19 +8,19 @@ const { pros, cons } = Astro.props
 ---
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-  <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
-    <h3 class="text-base font-semibold text-emerald-800 mb-3">✅ Pros</h3>
+  <div class="bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 rounded-xl p-5">
+    <h3 class="text-base font-semibold text-emerald-800 dark:text-emerald-300 mb-3">✅ Pros</h3>
     <ul class="space-y-1 list-none p-0 m-0">
       {pros.map((pro) => (
-        <li class="text-sm text-emerald-700">{pro}</li>
+        <li class="text-sm text-emerald-700 dark:text-emerald-400">{pro}</li>
       ))}
     </ul>
   </div>
-  <div class="bg-red-50 border border-red-200 rounded-xl p-5">
-    <h3 class="text-base font-semibold text-red-800 mb-3">❌ Cons</h3>
+  <div class="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-xl p-5">
+    <h3 class="text-base font-semibold text-red-800 dark:text-red-300 mb-3">❌ Cons</h3>
     <ul class="space-y-1 list-none p-0 m-0">
       {cons.map((con) => (
-        <li class="text-sm text-red-700">{con}</li>
+        <li class="text-sm text-red-700 dark:text-red-400">{con}</li>
       ))}
     </ul>
   </div>

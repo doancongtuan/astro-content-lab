@@ -30,6 +30,16 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <!-- Blocking script: runs before paint, prevents flash -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme')
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
     <title>{title} — {SITE_NAME}</title>
     <SEO
       title={`${title} — ${SITE_NAME}`}
@@ -40,10 +50,10 @@ const {
       noindex={noindex}
     />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-200">
     <Header />
     <main class="flex-1 py-10">
-      <div class={`${narrow ? 'max-w-5xl' : 'max-w-5xl'} mx-auto px-5`}>
+      <div class={`max-w-5xl mx-auto px-5`}>
         <slot />
       </div>
     </main>

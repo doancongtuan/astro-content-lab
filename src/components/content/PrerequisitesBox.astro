@@ -8,14 +8,14 @@ interface Props {
 const { items, title = 'Before you start' } = Astro.props
 ---
 
-<div class="bg-sky-50 border border-sky-200 rounded-xl p-5 mb-8">
-  <h3 class="flex items-center gap-2 text-base font-semibold text-sky-900 mb-3">
+<div class="bg-sky-50 dark:bg-sky-950 border border-sky-200 dark:border-sky-800 rounded-xl p-5 mb-8">
+  <h3 class="flex items-center gap-2 text-base font-semibold text-sky-900 dark:text-sky-200 mb-3">
     <span aria-hidden="true">📋</span> {title}
   </h3>
   <ul class="space-y-1.5 list-none p-0 m-0">
     {items.map((item) => (
-      <li class="flex items-start gap-2 text-sm text-sky-800">
-        <span class="text-sky-400 mt-0.5" aria-hidden="true">•</span>
+      <li class="flex items-start gap-2 text-sm text-sky-800 dark:text-sky-300">
+        <span class="text-sky-400 dark:text-sky-500 mt-0.5" aria-hidden="true">•</span>
         <span>{item}</span>
       </li>
     ))}
