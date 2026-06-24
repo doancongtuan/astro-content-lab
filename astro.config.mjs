@@ -6,6 +6,7 @@ import vercel from '@astrojs/vercel';
 import { unified } from '@astrojs/markdown-remark';
 import { visit } from 'unist-util-visit';
 import { SITE_URL } from './src/config';
+import { execSync } from 'child_process';
 
 function rehypeGoLinks() {
   return (tree) => {
@@ -24,7 +25,17 @@ function rehypeGoLinks() {
 
 export default defineConfig({
   site: SITE_URL,
-  integrations: [mdx()],
+  integrations: [
+    mdx(),
+    {
+      name: 'pagefind',
+      hooks: {
+        'astro:build:done': () => {
+          execSync('npx pagefind --site dist/client', { stdio: 'inherit' });
+        },
+      },
+    },
+  ],
   markdown: {
     processor: unified({
       rehypePlugins: [rehypeGoLinks],
