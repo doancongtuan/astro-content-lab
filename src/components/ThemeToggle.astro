@@ -22,8 +22,8 @@
 
   function updateIcon() {
     const isDark = document.documentElement.classList.contains('dark')
-    if (sun) sun.style.display = isDark ? 'block' : 'none'
-    if (moon) moon.style.display = isDark ? 'none' : 'block'
+    sun.style.display = isDark ? 'none' : 'block'
+    moon.style.display = isDark ? 'block' : 'none'
   }
 
   // Set icon on load
