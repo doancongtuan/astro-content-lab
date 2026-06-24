@@ -1,0 +1,25 @@
+---
+interface Props {
+  type: 'blog' | 'review' | 'guide' | 'compare'
+}
+
+const { type } = Astro.props
+
+const styles = {
+  blog: 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300',
+  review: 'bg-violet-100 dark:bg-violet-900 text-violet-700 dark:text-violet-300',
+  guide: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300',
+  compare: 'bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300',
+}
+
+const labels = {
+  blog: 'Blog',
+  review: 'Review',
+  guide: 'Guide',
+  compare: 'Compare',
+}
+---
+
+<span class={`inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full ${styles[type]}`}>
+  {labels[type]}
+</span>

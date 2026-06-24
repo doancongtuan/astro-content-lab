@@ -17,6 +17,7 @@ import ShareButtons from '../../components/ShareButtons.astro'
 import AuthorBox from '../../components/AuthorBox.astro'
 import NewsletterBox from '../../components/NewsletterBox.astro'
 import RelatedPosts from '../../components/RelatedPosts.astro'
+import CategoryBadge from '../../components/CategoryBadge.astro'
 
 export async function getStaticPaths() {
   const reviews = await getCollection('reviews')
@@ -80,7 +81,7 @@ const related = allReviews
         { label: 'Reviews', href: '/reviews' },
         { label: review.data.title },
       ]} />
-      <span class="inline-block mt-3 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-violet-100 text-violet-700">Review</span>
+      <CategoryBadge type="review" />
       <h1 class="text-3xl font-bold text-slate-900 mt-2 mb-2">{review.data.title}</h1>
       <p class="text-slate-500 mb-2">{review.data.description}</p>
       <div class="flex items-center gap-3 mb-2">

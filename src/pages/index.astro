@@ -61,6 +61,7 @@ function readingTime(content: string) {
   </section>
 
   <!-- Stats bar -->
+  <section class="fade-up mb-14">
   <section class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-14 py-6 border-y border-slate-200 dark:border-slate-700">
     {[
       { label: 'Blog posts', value: posts.length },
@@ -76,6 +77,7 @@ function readingTime(content: string) {
   </section>
 
   <!-- Featured post -->
+  <section class="fade-up mb-14">
   {featuredPost && (
     <section class="mb-14">
       <div class="flex items-center justify-between mb-6">
@@ -117,6 +119,7 @@ function readingTime(content: string) {
   )}
 
   <!-- Latest Posts -->
+  <section class="fade-up mb-14">
   <section class="mb-14">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Latest Posts</h2>
@@ -139,6 +142,7 @@ function readingTime(content: string) {
   </section>
 
   <!-- Latest Reviews -->
+  <section class="fade-up mb-14">
   <section class="mb-14">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Latest Reviews</h2>
@@ -146,7 +150,7 @@ function readingTime(content: string) {
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {latestReviews.map((review) => (
-        
+
         <a href={`/reviews/${review.id}`}
           class="group flex flex-col justify-between border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl p-5 no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
         >
@@ -165,6 +169,7 @@ function readingTime(content: string) {
   </section>
 
   <!-- Author strip -->
+  <section class="fade-up flex items-center ...">
   <section class="flex items-center gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 mb-4">
     {AUTHOR.avatar ? (
       <img src={AUTHOR.avatar} alt={AUTHOR.name} class="w-14 h-14 rounded-full object-cover shrink-0" />
@@ -183,20 +188,3 @@ function readingTime(content: string) {
   </section>
 
 </BaseLayout>
-
-<style>
-  @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .fade-up {
-    animation: fadeUp 0.5s ease forwards;
-  }
-</style>

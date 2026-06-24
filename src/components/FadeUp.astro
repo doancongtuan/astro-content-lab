@@ -1,0 +1,39 @@
+---
+---
+
+<style is:global>
+
+.fade-up {
+  opacity: 0.15;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<script>
+  function initFadeUp() {
+    const els = document.querySelectorAll('.fade-up')
+    if (!els.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    els.forEach((el) => observer.observe(el))
+  }
+
+  initFadeUp()
+</script>

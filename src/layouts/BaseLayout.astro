@@ -3,7 +3,11 @@ import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import SEO from '../components/SEO.astro'
 import { SITE_NAME, SITE_DESCRIPTION } from '../config'
+import ScrollToTop from '../components/ScrollToTop.astro'
+import CopyCode from '../components/CopyCode.astro'
+import FadeUp from '../components/FadeUp.astro'
 import '../styles/global.css'
+
 
 interface Props {
   title: string
@@ -58,5 +62,8 @@ const {
       </div>
     </main>
     <Footer />
+    <ScrollToTop />
+    <CopyCode />
+    <FadeUp />
   </body>
 </html>
