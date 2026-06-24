@@ -1,0 +1,44 @@
+---
+title: Understanding Astro Components
+description: A quick guide to how Astro components work and why they are different from React components.
+publishedAt: 2026-06-18T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-3.jpg
+heroImageAlt: Astro components guide
+tags: ["astro", "components"]
+---
+
+Astro components are the building blocks of every Astro site. They look like HTML, but they have a superpower: a server-side script block that runs at build time.
+
+## The frontmatter script
+
+Every Astro component can have a `---` block at the top. This runs on the server — never in the browser.
+
+``````astro
+---
+const message = 'Hello from the server'
+---
+<p>{message}</p>
+\```
+
+No JavaScript is shipped to the browser for this. The HTML is pre-rendered at build time.
+
+## Why this matters
+
+In React, every component ships JavaScript. In Astro, components ship zero JavaScript by default. You only add JavaScript when you explicitly need interactivity.
+
+For a content site — blog posts, reviews, landing pages — most components don't need JavaScript at all.
+
+## Slots
+
+Astro components support slots for passing children:
+
+`````astro
+<!-- Card.astro -->
+<div class="card">
+  <slot />
+</div>
+\```
+
+Simple, familiar, no special syntax needed.
+
+---

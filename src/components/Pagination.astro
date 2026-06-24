@@ -1,0 +1,44 @@
+---
+interface Props {
+  currentPage: number
+  lastPage: number
+  urlPrev: string | undefined
+  urlNext: string | undefined
+  basePath: string
+}
+
+const { currentPage, lastPage, urlPrev, urlNext, basePath } = Astro.props
+
+function pageUrl(p: number) {
+  return p === 1 ? `${basePath}/` : `${basePath}/${p}/`
+}
+---
+
+{lastPage > 1 && (
+  <nav class="flex items-center justify-center gap-2 mt-8" aria-label="Pagination">
+    {urlPrev && (
+      <a href={urlPrev} class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline">
+        ← Prev
+      </a>
+    )}
+
+    {Array.from({ length: lastPage }, (_, i) => i + 1).map((p) => (
+      
+      <a  href={pageUrl(p)}
+        class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors no-underline ${
+          p === currentPage
+            ? 'bg-indigo-600 text-white'
+            : 'border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400'
+        }`}
+      >
+        {p}
+      </a>
+    ))}
+
+    {urlNext && (
+      <a href={urlNext} class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline">
+        Next →
+      </a>
+    )}
+  </nav>
+)}

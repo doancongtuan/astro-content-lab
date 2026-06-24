@@ -1,0 +1,41 @@
+---
+title: What Changed in Tailwind CSS v4
+description: Tailwind v4 dropped the config file. Here is what that means for your workflow.
+publishedAt: 2026-06-19T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-4.jpg
+heroImageAlt: Tailwind CSS v4 changes
+tags: ["tailwind", "css"]
+---
+
+Tailwind v4 is a significant rewrite. The biggest change: no more `tailwind.config.js`.
+
+## CSS-first configuration
+
+Everything that used to live in `tailwind.config.js` now lives in your CSS file:
+
+````css
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #4f46e5;
+  --font-sans: system-ui, sans-serif;
+}
+\```
+
+Cleaner. One less file to maintain.
+
+## The dark mode change
+
+In v3, you'd add `darkMode: 'class'` to the config. In v4, you declare it in CSS:
+
+```css
+@variant dark (&:where(.dark, .dark *));
+\```
+
+Same result, different location. This tripped me up when first migrating — the dark: classes compiled fine but never activated until I found this line.
+
+## Performance
+
+Build times are significantly faster in v4. The new Oxide engine rewrites the CSS scanning in Rust. On this project, builds went from ~2s to ~700ms.
+
+---

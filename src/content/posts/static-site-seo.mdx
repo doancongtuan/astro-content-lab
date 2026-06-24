@@ -1,0 +1,31 @@
+---
+title: SEO on a Static Site — What Actually Matters
+description: Static sites have a natural SEO advantage. Here is how to make the most of it without overcomplicating things.
+publishedAt: 2026-06-20T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785821/samples/coffee.jpg
+heroImageAlt: SEO on static sites
+tags: ["seo", "astro"]
+---
+
+Static sites are fast. Fast sites rank better. That's the short version.
+
+The longer version involves a few things worth setting up properly.
+
+## The basics that actually move the needle
+
+**Title and description tags.** Every page needs a unique, descriptive title. Not "Home" — "Astro Content Lab — Learn Astro from Scratch". The description doesn't directly affect ranking but affects click-through rate.
+
+**Canonical URLs.** Prevent duplicate content issues by declaring the canonical URL on every page. In Astro, set `site` in `astro.config.mjs` and use it to build canonical tags.
+
+**Sitemap.** Generate one automatically. Astro has an official sitemap integration — one line to add, automatic on every build.
+
+## What doesn't matter as much as people think
+
+Meta keywords — ignored by Google since 2009. Schema markup for basic blog posts — helpful but not a ranking factor. Social meta tags — matter for shares, not rankings.
+
+## The static site advantage
+
+A WordPress site with caching can get to a good Core Web Vitals score. A static Astro site starts there by default. No caching layer to configure. No PHP overhead. HTML is just HTML.
+
+PageSpeed Insights on this site: 100 Performance, 100 Accessibility, 100 Best Practices, 100 SEO. Out of the box, before any optimization.
+```
