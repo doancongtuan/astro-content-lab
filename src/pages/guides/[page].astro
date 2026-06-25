@@ -7,9 +7,10 @@ import Pagination from '../../components/Pagination.astro'
 export async function getStaticPaths() {
   const PER_PAGE = 6
   const allGuides = await getCollection('guides')
-  const sorted = allGuides.sort((a, b) =>
-    new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
-  )
+  const sorted = allGuides.sort((a, b) => {
+    const dateDiff = new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+    return dateDiff !== 0 ? dateDiff : a.id.localeCompare(b.id)
+  })
   const totalPages = Math.ceil(sorted.length / PER_PAGE)
 
   return Array.from({ length: totalPages }, (_, i) => {
@@ -24,6 +25,13 @@ export async function getStaticPaths() {
 
 const { guides, page, totalPages } = Astro.props
 
+const sevenDaysAgo = new Date()
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+function isNew(date: string | Date) {
+  return new Date(date) > sevenDaysAgo
+}
+
 const difficultyColors: Record<string, string> = {
   beginner: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300',
   intermediate: 'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300',
@@ -32,34 +40,49 @@ const difficultyColors: Record<string, string> = {
 ---
 
 <BaseLayout title={`Guides — Page ${page}`}>
-  <div class="mb-10 pb-6 border-b border-slate-200 dark:border-slate-700">
-    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">Guides</h1>
-    <p class="text-slate-500 dark:text-slate-400 m-0">Step-by-step guides for building with Astro.</p>
+
+  <div class="mb-10 pb-8 border-b border-slate-200 dark:border-slate-700">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">🗺️</span>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 m-0">Guides</h1>
+    </div>
+    <p class="text-slate-500 dark:text-slate-400 m-0 mb-1">Step-by-step guides for building with Astro.</p>
+    <span class="text-sm text-slate-400 dark:text-slate-500">Page {page}</span>
   </div>
 
-  <div class="flex flex-col gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
     {guides.map((guide) => (
-      <a href={`/guides/${guide.id}`} class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 border border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 rounded-xl no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-sm transition-all group">
+      
+      <a href={`/guides/${guide.id}`}
+        class="fade-up group flex flex-col border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl overflow-hidden no-underline text-slate-900 dark:text-slate-100 hover:border-emerald-400 dark:hover:border-emerald-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+      >
         {guide.data.heroImage && (
-          <div class="flex-shrink-0 w-full h-44 sm:w-28 sm:h-16 rounded-lg overflow-hidden">
+          <div class="overflow-hidden h-40">
             <Image
               src={guide.data.heroImage}
               alt={guide.data.heroImageAlt || guide.data.title}
               width={400}
               height={210}
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         )}
-        <div class="flex-1 min-w-0">
-          <span class={`inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full mb-1 capitalize ${difficultyColors[guide.data.difficulty] ?? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
-            {guide.data.difficulty}
-          </span>
-          <h2 class="text-base font-semibold m-0 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{guide.data.title}</h2>
-          <p class="text-sm text-slate-500 dark:text-slate-400 m-0">{guide.data.description}</p>
-          <p class="text-sm text-slate-400 dark:text-slate-500 mt-1 m-0">⏱ {guide.data.estimatedTime}</p>
+        <div class="p-4 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <span class={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${difficultyColors[guide.data.difficulty] ?? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
+              {guide.data.difficulty}
+            </span>
+            {isNew(guide.data.publishedAt) && (
+              <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+            )}
+          </div>
+          <h2 class="text-sm font-semibold mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">{guide.data.title}</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 flex-1">{guide.data.description}</p>
+          <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+            <span class="text-xs text-slate-400 dark:text-slate-500">⏱ {guide.data.estimatedTime}</span>
+            <span class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Read →</span>
+          </div>
         </div>
-        <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium whitespace-nowrap flex-shrink-0 sm:ml-auto">Read guide →</span>
       </a>
     ))}
   </div>
@@ -71,4 +94,5 @@ const difficultyColors: Record<string, string> = {
     urlNext={page < totalPages ? `/guides/${page + 1}/` : undefined}
     basePath="/guides"
   />
+
 </BaseLayout>

@@ -5,45 +5,114 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 import Pagination from '../../components/Pagination.astro'
 import CategoryBadge from '../../components/CategoryBadge.astro'
 
-const PER_PAGE = 6
+const PER_PAGE = 7
 const allCompares = await getCollection('compares')
-const sorted = allCompares.sort((a, b) =>
-  new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
-)
+const sorted = allCompares.sort((a, b) => {
+  const dateDiff = new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+  return dateDiff !== 0 ? dateDiff : a.id.localeCompare(b.id)
+})
 const totalPages = Math.ceil(sorted.length / PER_PAGE)
 const compares = sorted.slice(0, PER_PAGE)
+
+const featuredCompare = compares[0]
+const restCompares = compares.slice(1)
+
+const sevenDaysAgo = new Date()
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+function isNew(date: string | Date) {
+  return new Date(date) > sevenDaysAgo
+}
 ---
 
 <BaseLayout title="Comparisons — Astro Content Lab">
-  <div class="mb-10 pb-6 border-b border-slate-200 dark:border-slate-700">
-    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">Comparisons</h1>
-    <p class="text-slate-500 dark:text-slate-400 m-0">Side-by-side comparisons to help you pick the right tool.</p>
+
+  <!-- Hero -->
+  <div class="mb-10 pb-8 border-b border-slate-200 dark:border-slate-700">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">⚡</span>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 m-0">Comparisons</h1>
+    </div>
+    <p class="text-slate-500 dark:text-slate-400 m-0 mb-3">Side-by-side comparisons to help you pick the right tool.</p>
+    <span class="text-sm text-slate-400 dark:text-slate-500">{allCompares.length} comparisons</span>
   </div>
 
-  <div class="flex flex-col gap-4">
-    {compares.map((compare) => (
-      <a href={`/compares/${compare.id}`} class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 border border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 rounded-xl no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-sm transition-all group">
-        {compare.data.heroImage && (
-          <div class="flex-shrink-0 w-full h-44 sm:w-28 sm:h-16 rounded-lg overflow-hidden">
+  <!-- Featured compare -->
+  {featuredCompare && (
+    <div class="mb-10 fade-up">
+      
+      <a  href={`/compares/${featuredCompare.id}`}
+        class="group block border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-2xl overflow-hidden hover:border-sky-400 dark:hover:border-sky-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 no-underline"
+      >
+        {featuredCompare.data.heroImage && (
+          <div class="overflow-hidden h-52 sm:h-64">
             <Image
-              src={compare.data.heroImage}
-              alt={compare.data.heroImageAlt || compare.data.title}
-              width={400}
-              height={210}
-              class="w-full h-full object-cover"
+              src={featuredCompare.data.heroImage}
+              alt={featuredCompare.data.heroImageAlt || featuredCompare.data.title}
+              width={1200}
+              height={630}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         )}
-        <div class="flex-1 min-w-0">
-          <CategoryBadge type="compare" />
-          <h2 class="text-base font-semibold m-0 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{compare.data.title}</h2>
-          <p class="text-sm text-slate-500 dark:text-slate-400 m-0">{compare.data.description}</p>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 m-0">🏆 Winner: {compare.data.winner}</p>
+        <div class="p-5">
+          <div class="flex items-center gap-2 mb-2">
+            <CategoryBadge type="compare" />
+            {isNew(featuredCompare.data.publishedAt) && (
+              <span class="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+            )}
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+            {featuredCompare.data.title}
+          </h2>
+          <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 mb-3">{featuredCompare.data.description}</p>
+          <div class="flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500">
+            <span>🏆 Winner: {featuredCompare.data.winner}</span>
+            <span>·</span>
+            <span>{new Date(featuredCompare.data.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+          </div>
         </div>
-        <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium whitespace-nowrap flex-shrink-0 sm:ml-auto">Read comparison →</span>
       </a>
-    ))}
-  </div>
+    </div>
+  )}
+
+  <!-- Grid compares -->
+  {restCompares.length > 0 && (
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
+      {restCompares.map((compare) => (
+        
+        <a  href={`/compares/${compare.id}`}
+          class="fade-up group flex flex-col border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl overflow-hidden no-underline text-slate-900 dark:text-slate-100 hover:border-sky-400 dark:hover:border-sky-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+        >
+          {compare.data.heroImage && (
+            <div class="overflow-hidden h-40">
+              <Image
+                src={compare.data.heroImage}
+                alt={compare.data.heroImageAlt || compare.data.title}
+                width={400}
+                height={210}
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          )}
+          <div class="p-4 flex flex-col flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <CategoryBadge type="compare" />
+              {isNew(compare.data.publishedAt) && (
+                <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+              )}
+            </div>
+            <h2 class="text-sm font-semibold mb-1 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2">{compare.data.title}</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 flex-1">{compare.data.description}</p>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+              <span class="text-xs text-slate-400 dark:text-slate-500">🏆 {compare.data.winner}</span>
+              <span class="text-xs text-sky-600 dark:text-sky-400 font-medium">Read →</span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  )}
 
   <Pagination
     currentPage={1}
@@ -52,4 +121,5 @@ const compares = sorted.slice(0, PER_PAGE)
     urlNext={totalPages > 1 ? '/compares/2/' : undefined}
     basePath="/compares"
   />
+
 </BaseLayout>

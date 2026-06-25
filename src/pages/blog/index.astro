@@ -4,52 +4,136 @@ import { Image } from 'astro:assets'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import Pagination from '../../components/Pagination.astro'
 
-const PER_PAGE = 6
+const PER_PAGE = 7
 const allPosts = await getCollection('posts')
-const sorted = allPosts.sort((a, b) =>
-  new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
-)
+const sorted = allPosts.sort((a, b) => {
+  const dateDiff = new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+  return dateDiff !== 0 ? dateDiff : a.id.localeCompare(b.id)
+})
 const totalPages = Math.ceil(sorted.length / PER_PAGE)
 const posts = sorted.slice(0, PER_PAGE)
-const page = 1
+
+const featuredPost = posts[0]
+const restPosts = posts.slice(1)
+
+const sevenDaysAgo = new Date()
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+function isNew(date: string | Date) {
+  return new Date(date) > sevenDaysAgo
+}
+
+function readingTime(description: string) {
+  const words = description?.split(/\s+/).length ?? 0
+  return Math.max(1, Math.round(words / 200)) + ' min read'
+}
 ---
 
 <BaseLayout title="Blog — Astro Content Lab">
-  <div class="mb-10 pb-6 border-b border-slate-200 dark:border-slate-700">
-    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">Blog</h1>
-    <p class="text-slate-500 dark:text-slate-400 m-0">Thoughts, tutorials and lessons learned building with Astro.</p>
+
+  <!-- Hero -->
+  <div class="mb-10 pb-8 border-b border-slate-200 dark:border-slate-700">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">📝</span>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 m-0">Blog</h1>
+    </div>
+    <p class="text-slate-500 dark:text-slate-400 m-0 mb-3">Thoughts, tutorials and lessons learned building with Astro.</p>
+    <span class="text-sm text-slate-400 dark:text-slate-500">{allPosts.length} articles</span>
   </div>
 
-  <div class="flex flex-col gap-4">
-    {posts.map((post) => (
-      <a href={`/blog/${post.id}`} class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 border border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 rounded-xl no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-sm transition-all group">
+  <!-- Featured post -->
+  {featuredPost && (
+    <div class="mb-10 fade-up">
+      
+      <a href={`/blog/${featuredPost.id}`}
+        class="group block border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-2xl overflow-hidden hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 no-underline"
+      >
+        {(featuredPost.data.heroImage || featuredPost.data.heroImageCloudinary) && (
+          <div class="overflow-hidden h-52 sm:h-64">
+            {featuredPost.data.heroImage ? (
+              <Image
+                src={featuredPost.data.heroImage}
+                alt={featuredPost.data.heroImageAlt || featuredPost.data.title}
+                width={1200}
+                height={630}
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <img
+                src={featuredPost.data.heroImageCloudinary}
+                alt={featuredPost.data.heroImageAlt || featuredPost.data.title}
+                loading="lazy"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
+          </div>
+        )}
+        <div class="p-5">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300">Latest</span>
+            {isNew(featuredPost.data.publishedAt) && (
+              <span class="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+            )}
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            {featuredPost.data.title}
+          </h2>
+          <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 mb-3">{featuredPost.data.description}</p>
+          <div class="flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500">
+            <span>{new Date(featuredPost.data.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+            <span>·</span>
+            <span>{readingTime(featuredPost.data.description)}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  )}
+
+  <!-- Grid posts -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+    {restPosts.map((post) => (
+      
+      <a href={`/blog/${post.id}`}
+        class="fade-up group flex flex-col border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl overflow-hidden no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+      >
         {(post.data.heroImage || post.data.heroImageCloudinary) && (
-          <div class="flex-shrink-0 w-full h-40 sm:w-28 sm:h-16 rounded-lg overflow-hidden">
+          <div class="overflow-hidden h-36">
             {post.data.heroImage ? (
               <Image
                 src={post.data.heroImage}
                 alt={post.data.heroImageAlt || post.data.title}
                 width={400}
                 height={210}
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
               <img
                 src={post.data.heroImageCloudinary}
                 alt={post.data.heroImageAlt || post.data.title}
-                width={400}
-                height={210}
                 loading="lazy"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             )}
           </div>
         )}
-        <div class="flex-1 min-w-0">
-          <h2 class="text-base font-semibold m-0 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{post.data.title}</h2>
-          <p class="text-sm text-slate-500 dark:text-slate-400 m-0 line-clamp-2">{post.data.description}</p>
+        <div class="p-4 flex flex-col flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            {isNew(post.data.publishedAt) && (
+              <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+            )}
+            {post.data.tags?.slice(0, 1).map((tag: string) => (
+              <span class="text-xs text-slate-400 dark:text-slate-500">#{tag}</span>
+            ))}
+          </div>
+          <h2 class="text-sm font-semibold mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2">{post.data.title}</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 flex-1">{post.data.description}</p>
+          <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+            <span class="text-xs text-slate-400 dark:text-slate-500">
+              {new Date(post.data.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+            <span class="text-xs text-indigo-600 dark:text-indigo-400 font-medium">Read →</span>
+          </div>
         </div>
-        <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium whitespace-nowrap flex-shrink-0 sm:ml-auto">Read more →</span>
       </a>
     ))}
   </div>
@@ -61,4 +145,5 @@ const page = 1
     urlNext={totalPages > 1 ? '/blog/2/' : undefined}
     basePath="/blog"
   />
+
 </BaseLayout>

@@ -5,49 +5,119 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 import Pagination from '../../components/Pagination.astro'
 import CategoryBadge from '../../components/CategoryBadge.astro'
 
-const PER_PAGE = 6
+const PER_PAGE = 7
 const allReviews = await getCollection('reviews')
-const sorted = allReviews.sort((a, b) =>
-  new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
-)
+const sorted = allReviews.sort((a, b) => {
+  const dateDiff = new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+  return dateDiff !== 0 ? dateDiff : a.id.localeCompare(b.id)
+})
 const totalPages = Math.ceil(sorted.length / PER_PAGE)
 const reviews = sorted.slice(0, PER_PAGE)
+
+const featuredReview = reviews[0]
+const restReviews = reviews.slice(1)
+
+const sevenDaysAgo = new Date()
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+function isNew(date: string | Date) {
+  return new Date(date) > sevenDaysAgo
+}
 ---
 
 <BaseLayout title="Reviews — Astro Content Lab">
-  <div class="mb-10 pb-6 border-b border-slate-200 dark:border-slate-700">
-    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">Reviews</h1>
-    <p class="text-slate-500 dark:text-slate-400 m-0">Honest reviews of hosting, tools and services for content sites.</p>
+
+  <!-- Hero -->
+  <div class="mb-10 pb-8 border-b border-slate-200 dark:border-slate-700">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-3xl">⭐</span>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 m-0">Reviews</h1>
+    </div>
+    <p class="text-slate-500 dark:text-slate-400 m-0 mb-3">Honest reviews of hosting, tools and services for content sites.</p>
+    <span class="text-sm text-slate-400 dark:text-slate-500">{allReviews.length} reviews</span>
   </div>
 
-  <div class="flex flex-col gap-4">
-    {reviews.map((review) => (
-      <a href={`/reviews/${review.id}`} class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 border border-slate-200 dark:border-slate-700 dark:bg-slate-800/50 rounded-xl no-underline text-slate-900 dark:text-slate-100 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-sm transition-all group">
-        {review.data.heroImage && (
-          <div class="flex-shrink-0 w-full h-44 sm:w-28 sm:h-16 rounded-lg overflow-hidden">
+  <!-- Featured review -->
+  {featuredReview && (
+    <div class="mb-10 fade-up">
+      
+      <a href={`/reviews/${featuredReview.id}`}
+        class="group block border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-2xl overflow-hidden hover:border-violet-400 dark:hover:border-violet-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 no-underline"
+      >
+        {featuredReview.data.heroImage && (
+          <div class="overflow-hidden h-52 sm:h-64">
             <Image
-              src={review.data.heroImage}
-              alt={review.data.heroImageAlt || review.data.title}
-              width={400}
-              height={210}
-              class="w-full h-full object-cover"
+              src={featuredReview.data.heroImage}
+              alt={featuredReview.data.heroImageAlt || featuredReview.data.title}
+              width={1200}
+              height={630}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         )}
-        <div class="flex-1 min-w-0">
-          <CategoryBadge type="review" />
-          <h2 class="text-base font-semibold m-0 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{review.data.title}</h2>
-          <p class="text-sm text-slate-500 dark:text-slate-400 m-0">{review.data.description}</p>
-          <p class="text-amber-500 text-sm mt-1 m-0">
-            {'★'.repeat(Math.floor(review.data.rating))}
-            {'☆'.repeat(5 - Math.floor(review.data.rating))}
-            {' '}{review.data.rating}/5
-          </p>
+        <div class="p-5">
+          <div class="flex items-center gap-2 mb-2">
+            <CategoryBadge type="review" />
+            {isNew(featuredReview.data.publishedAt) && (
+              <span class="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+            )}
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+            {featuredReview.data.title}
+          </h2>
+          <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 mb-3">{featuredReview.data.description}</p>
+          <div class="flex items-center gap-3">
+            <span class="text-amber-500 text-sm">
+              {'★'.repeat(Math.floor(featuredReview.data.rating))}{'☆'.repeat(5 - Math.floor(featuredReview.data.rating))} {featuredReview.data.rating}/5
+            </span>
+            <span class="text-xs text-slate-400 dark:text-slate-500">
+              {new Date(featuredReview.data.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          </div>
         </div>
-        <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium whitespace-nowrap flex-shrink-0 sm:ml-auto">Read review →</span>
       </a>
-    ))}
-  </div>
+    </div>
+  )}
+
+  <!-- Grid reviews -->
+  {restReviews.length > 0 && (
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
+      {restReviews.map((review) => (
+        
+        <a href={`/reviews/${review.id}`}
+          class="fade-up group flex flex-col border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl overflow-hidden no-underline text-slate-900 dark:text-slate-100 hover:border-violet-400 dark:hover:border-violet-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+        >
+          {review.data.heroImage && (
+            <div class="overflow-hidden h-40">
+              <Image
+                src={review.data.heroImage}
+                alt={review.data.heroImageAlt || review.data.title}
+                width={400}
+                height={210}
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          )}
+          <div class="p-4 flex flex-col flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <CategoryBadge type="review" />
+              {isNew(review.data.publishedAt) && (
+                <span class="inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+              )}
+            </div>
+            <h2 class="text-sm font-semibold mb-1 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors line-clamp-2">{review.data.title}</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 flex-1">{review.data.description}</p>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+              <span class="text-amber-500 text-xs">
+                {'★'.repeat(Math.floor(review.data.rating))}{'☆'.repeat(5 - Math.floor(review.data.rating))} {review.data.rating}/5
+              </span>
+              <span class="text-xs text-violet-600 dark:text-violet-400 font-medium">Read →</span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  )}
 
   <Pagination
     currentPage={1}
@@ -56,4 +126,5 @@ const reviews = sorted.slice(0, PER_PAGE)
     urlNext={totalPages > 1 ? '/reviews/2/' : undefined}
     basePath="/reviews"
   />
+
 </BaseLayout>
