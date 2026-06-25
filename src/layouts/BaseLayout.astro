@@ -2,12 +2,11 @@
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import SEO from '../components/SEO.astro'
-import { SITE_NAME, SITE_DESCRIPTION } from '../config'
+import { SITE_NAME } from '../config'
 import ScrollToTop from '../components/ScrollToTop.astro'
 import CopyCode from '../components/CopyCode.astro'
 import FadeUp from '../components/FadeUp.astro'
 import '../styles/global.css'
-
 
 interface Props {
   title: string
@@ -17,6 +16,7 @@ interface Props {
   ogType?: 'website' | 'article'
   noindex?: boolean
   narrow?: boolean
+  fullBleedHero?: boolean
 }
 
 const {
@@ -27,6 +27,7 @@ const {
   ogType = 'website',
   noindex = false,
   narrow = false,
+  fullBleedHero = false,
 } = Astro.props
 ---
 
@@ -34,7 +35,6 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <!-- Blocking script: runs before paint, prevents flash -->
     <script is:inline>
       (function() {
         const saved = localStorage.getItem('theme')
@@ -56,8 +56,9 @@ const {
   </head>
   <body class="min-h-screen flex flex-col bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-200">
     <Header />
-    <main class="flex-1 py-10" data-pagefind-body>
-      <div class={`max-w-5xl mx-auto px-5`}>
+    <main class="flex-1" data-pagefind-body>
+      {fullBleedHero && <slot name="hero" />}
+      <div class="max-w-5xl mx-auto px-5 py-10">
         <slot />
       </div>
     </main>
