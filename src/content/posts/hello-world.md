@@ -4,6 +4,8 @@ description: Every developer starts here. So do I.
 publishedAt: 2026-06-17T00:00:00Z
 heroImage: ../../assets/images/posts/hello-world.jpg
 heroImageAlt: Terminal showing Hello World in the browser for the first time
+category: opinion
+tags: ["astro", "beginners"]
 ---
 
 Every programming language. Every framework. Every course. Every tutorial.

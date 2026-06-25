@@ -1,22 +1,29 @@
 ---
-// src/components/content/DifficultyBadge.astro
-
 interface Props {
   difficulty: 'beginner' | 'intermediate' | 'advanced'
 }
 
 const { difficulty } = Astro.props
 
-const difficultyStyles: Record<string, { class: string; icon: string }> = {
-  beginner: { class: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300', icon: '🌱' },
-  intermediate: { class: 'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300', icon: '⚡' },
-  advanced: { class: 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300', icon: '🔥' },
+const styles: Record<string, { class: string; icon: string }> = {
+  beginner: {
+    class: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300',
+    icon: '🌱'
+  },
+  intermediate: {
+    class: 'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300',
+    icon: '⚡'
+  },
+  advanced: {
+    class: 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300',
+    icon: '🔥'
+  },
 }
 
-const style = difficultyStyles[difficulty] ?? { class: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400', icon: '' }
+const style = styles[difficulty] ?? { class: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400', icon: '' }
 ---
 
-<span class={`inline-flex items-center gap-1 mt-3 text-xs font-semibold px-2.5 py-0.5 rounded-full capitalize mb-1 ${style.class}`}>
-  {style.icon && <span aria-hidden="true">{style.icon}</span>}
+<span class={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-0.5 rounded-full capitalize ${style.class}`}>
+  <span class="text-[10px]">{style.icon}</span>
   {difficulty}
 </span>

@@ -4,6 +4,8 @@ description: After 10 years of building WordPress sites, here is what finally pu
 publishedAt: 2026-06-17T00:00:00Z
 heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-3.jpg
 heroImageAlt: Moved From WordPress to Astro
+category: opinion
+tags: ["wordpress", "astro", "migration"]
 
 answerBox:
   question: "Why would a WordPress developer switch to Astro?"

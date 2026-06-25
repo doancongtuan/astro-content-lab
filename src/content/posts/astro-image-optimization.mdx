@@ -1,0 +1,26 @@
+---
+title: Image Optimization in Astro — Local vs Cloudinary
+description: Astro has built-in image optimization for local images. For remote images, Cloudinary is the practical choice. Here is when to use each.
+publishedAt: 2026-06-17T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-2.jpg
+heroImageAlt: Image optimization comparison
+category: tutorial
+tags: ["astro", "images", "cloudinary", "performance"]
+---
+
+Astro handles local images automatically. Import an image, use the `<Image />` component, and Astro converts it to WebP, resizes it, and generates srcset for responsive loading.
+
+```astro
+import { Image } from 'astro:assets'
+import heroImg from '../../assets/hero.jpg'
+
+<Image src={heroImg} alt="Hero" width={1200} height={630} />
+```
+
+Zero config. Works at build time.
+
+## When local images aren't enough
+
+Local images live in your repo. A site with 500 blog posts and 2 images each = 1000 image files in version control. Slow clones. Large repo. Build times increase.
+
+Cloudinary solves this by storing images externally and serving them via URL with transformation parameters.

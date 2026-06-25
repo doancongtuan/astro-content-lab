@@ -4,6 +4,8 @@ description: Static sites, SSG, and Jamstack explained for WordPress users — w
 publishedAt: 2026-06-17T00:00:00Z
 heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781786068/hello-world_cjorap.jpg
 heroImageAlt: Static site generation explained
+category: deep-dive
+tags: ["astro", "static-site", "jamstack"]
 ---
 
 If you've only ever built sites on WordPress, the term "static site" probably sounds like a step backward. No database. No admin panel. No dynamic content. Just... files?

@@ -71,18 +71,47 @@ const related = allPosts
   <ReadingProgress />
 
   <article>
-    <div class="mb-8 pb-6 border-b border-slate-200">
-      <Breadcrumb items={[
-        { label: 'Home', href: '/' },
-        { label: 'Blog', href: '/blog' },
-        { label: post.data.title },
-      ]} />
-      <h1 class="text-3xl font-bold text-slate-900 mt-4 mb-2">{post.data.title}</h1>
-      <p class="text-slate-500 mb-2">{post.data.description}</p>
-      <p class="text-sm text-slate-400">Published {publishedDate}</p>
-      <ShareButtons title={post.data.title} url={Astro.url.href} /> 
-      
+  
+  <div class="mb-8 pb-6 border-b border-slate-200 dark:border-slate-700">
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Blog', href: '/blog' },
+    { label: post.data.title },
+  ]} />
+
+  <div class="flex items-center gap-2 mt-4 mb-3">
+    <a href="/blog"
+      class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 no-underline hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">
+      Blog
+    </a>
+    {post.data.category && (
+      <a href={`/categories/${post.data.category}`}
+        class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 no-underline hover:bg-slate-200 dark:hover:bg-slate-700 capitalize transition-colors">
+        {post.data.category}
+      </a>
+    )}
+  </div>
+
+  <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-3 leading-tight">{post.data.title}</h1>
+  <p class="text-lg text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">{post.data.description}</p>
+
+  <div class="flex items-center gap-2 text-sm text-slate-400 dark:text-slate-500 mb-4">
+    <span>Published {publishedDate}</span>
+  </div>
+
+  {post.data.tags && post.data.tags.length > 0 && (
+    <div class="flex flex-wrap gap-2 mb-5">
+      {post.data.tags.map((tag: string) => (
+        <a href={`/tags/${tag}`}
+          class="text-xs px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 no-underline transition-colors">
+          #{tag}
+        </a>
+      ))}
     </div>
+  )}
+
+  <ShareButtons title={post.data.title} url={Astro.url.href} />
+</div>
 
     {post.data.answerBox && (
       <AnswerBox

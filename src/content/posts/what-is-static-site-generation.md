@@ -4,6 +4,8 @@ description: SSG explained for WordPress users — why pre-built HTML is faster,
 publishedAt: 2026-06-17T00:00:00Z
 heroImage: ../../assets/images/posts/what-is-static-generation-2.jpg
 heroImageAlt: Diagram showing static site generation vs dynamic rendering
+category: deep-dive
+tags: ["astro", "ssg", "performance"]
 ---
 
 If you've used WordPress, you know how it works: someone visits your site, WordPress queries the database, assembles the page from PHP templates, and sends HTML back to the browser. Every. Single. Request.

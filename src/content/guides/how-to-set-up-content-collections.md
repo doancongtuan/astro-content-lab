@@ -1,11 +1,13 @@
 ---
 title: How to Set Up Content Collections in Astro 6
 description: A step-by-step guide to setting up Content Collections in Astro 6 — with the correct API that most tutorials get wrong.
-difficulty: beginner
+difficulty: intermediate
 estimatedTime: 20 minutes
 publishedAt: 2026-06-17T00:00:00Z
 heroImage: ../../assets/images/guides/content-collections-2.jpg
 heroImageAlt: Vercel import repository screen
+category: tutorial
+tags: ["astro", "content-collections", "typescript"]
 ---
 
 ## How to Set Up Content Collections in Astro 6

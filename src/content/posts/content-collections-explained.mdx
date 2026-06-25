@@ -1,0 +1,40 @@
+---
+title: Content Collections in Astro 6 — The Right Way
+description: Content Collections are how Astro manages structured content. Here is how they work in Astro 6 and what changed from earlier versions.
+publishedAt: 2026-06-19T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785821/samples/coffee.jpg
+heroImageAlt: Content Collections in Astro
+category: tutorial
+tags: ["astro", "content-collections", "typescript"]
+---
+
+Content Collections are Astro's way of organizing and validating structured content — blog posts, reviews, guides, any repeated content type with a consistent schema.
+
+## What changed in Astro 6
+
+In Astro 5 and earlier, collections were defined in `src/content/config.ts`. In Astro 6, the file moved to `src/content.config.ts` — one level up, outside the content folder.
+
+The glob pattern also changed:
+
+```typescript
+// Astro 6
+loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' })
+```
+
+Miss this change and `getCollection()` returns an empty array. No error. Just silence.
+
+## Schema validation
+
+The real value of Content Collections is Zod schema validation at build time. Define what fields are required, what types they must be, and Astro will fail the build loudly if any content file doesn't match.
+
+```typescript
+const posts = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    publishedAt: z.date(),
+    rating: z.number().min(1).max(5),
+  })
+})
+```
+
+Wrong type in frontmatter → build fails with a clear error. No silent data corruption.

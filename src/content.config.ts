@@ -13,6 +13,16 @@ const faqSchema = z.array(
   })
 ).optional()
 
+const categorySchema = z.enum([
+  'tutorial',
+  'opinion',
+  'deep-dive',
+  'news',
+  'case-study',
+]).optional()
+
+const tagsSchema = z.array(z.string()).optional()
+
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: ({ image }) => z.object({
@@ -22,6 +32,8 @@ const posts = defineCollection({
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
     heroImageCloudinary: z.string().optional(),
+    category: categorySchema,
+    tags: tagsSchema,
     answerBox: answerBoxSchema,
     faq: faqSchema,
   }),
@@ -40,6 +52,8 @@ const reviews = defineCollection({
     publishedAt: z.date(),
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
+    category: categorySchema,
+    tags: tagsSchema,
     answerBox: answerBoxSchema,
     faq: faqSchema,
   }),
@@ -57,6 +71,8 @@ const compares = defineCollection({
     publishedAt: z.date(),
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
+    category: categorySchema,
+    tags: tagsSchema,
     answerBox: answerBoxSchema,
     faq: faqSchema,
   }),
@@ -72,6 +88,8 @@ const guides = defineCollection({
     publishedAt: z.date(),
     heroImage: image().optional(),
     heroImageAlt: z.string().optional(),
+    category: categorySchema,
+    tags: tagsSchema,
     answerBox: answerBoxSchema,
     faq: faqSchema,
   }),

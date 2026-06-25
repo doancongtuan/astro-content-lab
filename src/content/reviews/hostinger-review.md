@@ -5,6 +5,8 @@ productName: Hostinger
 rating: 4.2
 heroImage: ../../assets/images/reviews/hostinger-review.jpg
 heroImageAlt: Hostinger hosting dashboard
+category: case-study
+tags: ["hosting", "wordpress", "review"]
 pros:
   - Genuinely cheap — promotional pricing starts under $3/mo
   - Fast setup — WordPress installs in under 2 minutes

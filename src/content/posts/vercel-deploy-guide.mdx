@@ -1,0 +1,33 @@
+---
+title: Deploying Astro to Vercel — What Nobody Tells You
+description: Vercel deploys Astro in one click. But there are a few things that catch people out the first time.
+publishedAt: 2026-06-18T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-3.jpg
+heroImageAlt: Vercel deployment dashboard
+category: case-study
+tags: ["vercel", "deployment", "astro", "review"]
+---
+
+Vercel and Astro work well together. Connect your GitHub repo, Vercel detects Astro automatically, deploys on every push. Takes about 2 minutes to set up.
+
+But there are things that catch people out.
+
+## The adapter requirement
+
+For a fully static Astro site, no adapter is needed. But the moment you add any server-side feature — API routes, server-rendered pages, middleware — you need `@astrojs/vercel`.
+
+```bash
+npx astro add vercel
+```
+
+This changes the build output from `dist/` to a Vercel-specific structure. Static files go to `dist/client/`. This matters if you're running post-build scripts — they need to target `dist/client/`, not `dist/`.
+
+## Environment variables
+
+Vercel's environment variables are available at build time and runtime. But Astro's static build only has access to variables prefixed with `PUBLIC_` on the client side.
+
+Server-side variables (API keys, secrets) work normally in server-rendered routes and middleware. Never in static pages.
+
+## Preview deployments
+
+Every pull request gets a preview deployment URL. Useful for reviewing content changes before merging to main. Free on Vercel's hobby plan.

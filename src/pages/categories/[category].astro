@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+export async function getStaticPaths() {
+  const [posts, reviews, guides, compares] = await Promise.all([
+    getCollection('posts'),
+    getCollection('reviews'),
+    getCollection('guides'),
+    getCollection('compares'),
+  ])
+
+  const allContent = [
+    ...posts.map(p => ({ ...p, contentType: 'blog', url: `/blog/${p.id}` })),
+    ...reviews.map(p => ({ ...p, contentType: 'review', url: `/reviews/${p.id}` })),
+    ...guides.map(p => ({ ...p, contentType: 'guide', url: `/guides/${p.id}` })),
+    ...compares.map(p => ({ ...p, contentType: 'compare', url: `/compares/${p.id}` })),
+  ]
+
+  const categories = [...new Set(allContent.map(p => p.data.category).filter(Boolean))]
+
+  return categories.map(category => ({
+    params: { category },
+    props: {
+      category,
+      items: allContent
+        .filter(p => p.data.category === category)
+        .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()),
+    },
+  }))
+}
+
+const { category, items } = Astro.props
+
+const categoryLabels: Record<string, string> = {
+  tutorial: 'Tutorials',
+  opinion: 'Opinion',
+  'deep-dive': 'Deep Dives',
+  news: 'News',
+  'case-study': 'Case Studies',
+}
+
+const sevenDaysAgo = new Date()
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+---
+
+<BaseLayout title={`${categoryLabels[category] ?? category} — Astro Content Lab`}>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+  {items.map((item) => (
+    <div class="group flex flex-col border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl overflow-hidden hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+      <a href={item.url} class="no-underline">
+        <div class="overflow-hidden h-36 bg-slate-100 dark:bg-slate-700">
+          {item.data.heroImage ? (
+            <Image
+              src={item.data.heroImage}
+              alt={item.data.heroImageAlt || item.data.title}
+              width={400}
+              height={210}
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : item.data.heroImageCloudinary ? (
+            <img
+              src={item.data.heroImageCloudinary}
+              alt={item.data.heroImageAlt || item.data.title}
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div class="w-full h-full bg-gradient-to-br from-indigo-50 to-slate-100 dark:from-indigo-950 dark:to-slate-800" />
+          )}
+        </div>
+      </a>
+      <div class="p-4 flex flex-col flex-1">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 capitalize">
+            {item.contentType}
+          </span>
+          {new Date(item.data.publishedAt) > sevenDaysAgo && (
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">New</span>
+          )}
+        </div>
+        <a href={item.url} class="no-underline">
+          <h2 class="text-sm font-semibold mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 text-slate-900 dark:text-slate-100">{item.data.title}</h2>
+        </a>
+        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 flex-1">{item.data.description}</p>
+        <div class="flex items-center gap-2 flex-wrap mt-2">
+          {item.data.tags?.slice(0, 3).map((t: string) => (
+            <a href={`/tags/${t}`} class="text-xs text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 no-underline">#{t}</a>
+          ))}
+        </div>
+        <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+          <span class="text-xs text-slate-400 dark:text-slate-500">
+            {new Date(item.data.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </span>
+          <a href={item.url} class="text-xs text-indigo-600 dark:text-indigo-400 font-medium no-underline">Read →</a>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+title: Astro vs WordPress — Performance Comparison
+description: Side-by-side performance numbers between a WordPress site and the same content rebuilt in Astro. Real data, not theory.
+publishedAt: 2026-06-20T00:00:00Z
+heroImageCloudinary: https://res.cloudinary.com/di9xkgxd8/image/upload/v1781785824/cld-sample-4.jpg
+heroImageAlt: Performance comparison chart
+category: deep-dive
+tags: ["astro", "wordpress", "performance"]
+---
+
+Numbers first.
+
+WordPress site on Vultr 4GB VPS, WP Rocket, optimized images: PageSpeed 78 mobile, 91 desktop.
+
+Same content rebuilt in Astro, deployed on Vercel: PageSpeed 100 mobile, 100 desktop.
+
+## Why the difference is so large
+
+WordPress executes PHP on every request — even with caching. The cache still needs to warm up, expire, and rebuild. On a slow request or cache miss, the server does real work.
+
+Astro builds to static HTML. The server returns a pre-built file. No PHP. No database query. No cache warmup. Just a file.
+
+## What this means in practice
+
+For a content site — blog, reviews, affiliate — the performance gap is real and consistent. Not just in synthetic tests. In real user metrics: LCP, FID, CLS.
+
+The tradeoff: Astro requires a rebuild to publish new content. WordPress publishes instantly. For most content sites, rebuilding on publish (30-60 seconds on Vercel) is acceptable.
+
+For a news site updating 50 times a day? WordPress still wins on workflow.

@@ -5,6 +5,8 @@ productName: Vercel
 rating: 4.8
 heroImage: ../../assets/images/reviews/vercel-review.jpg
 heroImageAlt: Vercel deployment dashboard showing successful build
+category: case-study
+tags: ["vercel", "deployment", "astro", "review"]
 pros:
   - Free tier is genuinely generous
   - Auto-deploy on every GitHub push
